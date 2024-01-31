@@ -1,34 +1,29 @@
 import { useState } from 'react'
 import viteLogo from '/vite.svg'
-import './App.css'
 import { SignedIn, SignedOut } from "@clerk/clerk-react"
 import Home from './components/Home'
-import Login from './components/Login'
-import {
-  createBrowserRouter,
-  BrowserRouter,
-  RouterProvider,
-  Routes,
-  Route,
-  Router,
-  Link
-} from "react-router-dom";
+import SignedOutHome from './components/signedOutHome'
+
+import Nav from './components/Nav'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+
 
   return (
-    <>
-      <div>
-      <SignedOut>
-          <Login />
-      </SignedOut>
-      <SignedIn>
-        <Home />
-      </SignedIn>
-      </div>
-    </>
-  )
-}
+   
+        
+        <div>
+          <SignedIn>
+            <Home />
+          </SignedIn>
+          <SignedOut>
+            <SignedOutHome />
+          </SignedOut>
+        </div>
+      
+  );
+};
+
 
 export default App

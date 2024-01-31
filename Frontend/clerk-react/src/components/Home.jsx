@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
+import Nav from "./Nav";
+import SignedOutHome from "./signedOutHome";
+import Dashboard from "./Dashboard";
+import Layout from "./layout";
+import {
+    createBrowserRouter,
+    BrowserRouter,
+    RouterProvider,
+    Routes,
+    Route,
+    Router,
+    Link
+  } from "react-router-dom";
 
 function Home(){
 
@@ -32,6 +45,7 @@ function Home(){
                 })
                 .then(r=>r.json())
                 .then(data=>setUser(data))
+                
             }
             else{
                 setUser(userCheck[0])
@@ -41,16 +55,12 @@ function Home(){
         }
     
   return (
-    <>
-      {/* Include the sign-out button */}
-      <SignOutButton />
-      {/* You can also render user-related information here */}
-      <div>
-        <p>User ID: {user.id}</p>
-        <p>User Email: {user.email}</p>
-      </div>
-    </>
-  );
+    <BrowserRouter>
+      <Layout user={user} />
+    </BrowserRouter>
+ );
 }
+
+
 
 export default Home;
