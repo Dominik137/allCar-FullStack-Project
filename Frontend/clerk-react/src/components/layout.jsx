@@ -9,7 +9,7 @@ function Layout({ user }) {
  return (
     <div className="flex flex-col h-screen">
       <header className="bg-black w-full">
-        <h1 className="text-white text-xl p-4">allCar</h1>
+        <h1 className="text-white text-2xl p-4 font-sixty4">allCar</h1>
       </header>
       <div className="flex h-full">
         <Nav user={user} />

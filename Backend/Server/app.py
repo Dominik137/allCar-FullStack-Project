@@ -34,5 +34,19 @@ def user():
         db.session.add(new_user)
         db.session.commit()
         return jsonify(new_user.to_dict()), 200
+    
+
+@app.route('/api/car_info', methods=["Get", "POST"])
+def car_info():
+    if request.method == "GET":
+        pass
+    elif request.method == "POST":
+        new_car_info = CarInfo(year=request.json['year'], make=request.json['make'], model=request.json['model'], mileage=request.json['mileage'],
+                               general_info=request.json['general_info'], engine_info=request.json['engine_info'], light_info=request.json['light_info'],
+                               wheel_info=request.json['wheel_info'])
+        db.session.add(new_car_info)
+        db.session.commit()
+        return jsonify(new_car_info.to_dict(), 200)
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
