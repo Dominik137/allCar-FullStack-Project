@@ -8,7 +8,7 @@ from config import db
 class User(db.Model, SerializerMixin):
     __tablename__ = "Users"
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
     username = db.Column(db.String)
     
     garage  = db.relationship('Garage', back_populates='user')
@@ -37,6 +37,8 @@ class SavedCar(db.Model, SerializerMixin):
     car_info = db.relationship('CarInfo', back_populates='saved_car')
     maintenance_info = db.relationship('MaintenanceInfo', back_populates='saved_car')
 
+    serialize_rules = ('-garage', '-car_info', '-maintenance_info')
+
 
 
 class CarInfo(db.Model, SerializerMixin):
@@ -53,6 +55,8 @@ class CarInfo(db.Model, SerializerMixin):
 
     saved_car = db.relationship('SavedCar', back_populates='car_info')
 
+    serialize_rules = ('-saved_car',)
+
 class MaintenanceInfo(db.Model, SerializerMixin):
     __tablename__ = "Maintenance_Infos"
     id = db.Column(db.Integer, primary_key=True)
@@ -66,6 +70,8 @@ class MaintenanceInfo(db.Model, SerializerMixin):
     inputed_break_fluid_service = db.Column(db.String)
     
     saved_car = db.relationship('SavedCar', back_populates='maintenance_info')
+
+    serialize_rules = ('-saved_car',)
 
 
 
