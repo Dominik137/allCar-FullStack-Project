@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'sixty4': ['Sixtyfour', 'sans-serif'],
+        'times': ['Times New Roman', 'serif'],
       },
     },
   },

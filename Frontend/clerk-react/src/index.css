@@ -1,6 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-newroman {
+  font-family: 'Times New Roman', serif;
+}
+
+.pencil {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+.pencil:hover {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 700,
+    'GRAD' 1,
+    'opsz' 48;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

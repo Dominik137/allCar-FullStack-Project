@@ -33,7 +33,7 @@ class SavedCar(db.Model, SerializerMixin):
     car_info_id = db.Column(db.Integer, db.ForeignKey('Car_Infos.id'))  # Corrected this line
     maintenance_info_id = db.Column(db.Integer, db.ForeignKey('Maintenance_Infos.id'))  # Corrected this line
 
-    garage = db.relationship('Garage', back_populates='saved_car')
+    garage = db.relationship('Garage', back_populates='saved_car', cascade="all, delete-orphan")
     car_info = db.relationship('CarInfo', back_populates='saved_car')
     maintenance_info = db.relationship('MaintenanceInfo', back_populates='saved_car')
 
@@ -53,7 +53,7 @@ class CarInfo(db.Model, SerializerMixin):
     light_info = db.Column(db.String)
     wheel_info = db.Column(db.String)
 
-    saved_car = db.relationship('SavedCar', back_populates='car_info')
+    saved_car = db.relationship('SavedCar', back_populates='car_info', cascade="all, delete-orphan")
 
     serialize_rules = ('-saved_car',)
 
@@ -69,7 +69,7 @@ class MaintenanceInfo(db.Model, SerializerMixin):
     rec_break_fluid_service = db.Column(db.String)
     inputed_break_fluid_service = db.Column(db.String)
     
-    saved_car = db.relationship('SavedCar', back_populates='maintenance_info')
+    saved_car = db.relationship('SavedCar', back_populates='maintenance_info', cascade="all, delete-orphan")
 
     serialize_rules = ('-saved_car',)
 

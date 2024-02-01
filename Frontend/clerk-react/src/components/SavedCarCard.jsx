@@ -2,8 +2,31 @@
 import React from "react";
 import EditableTitle from "./EditableTitle"; // Import the EditableTitle component
 
-function SavedCarCard({ car, setSavedCar }) {
+function SavedCarCard({ car, setSavedCarName, onDelete }) {
  const { saved_car, car_info, maintenance_info } = car;
+
+ const handleDelete = async () => {
+    try {
+       const response = await fetch(`/api/saved_cars/${saved_car.id}`, {
+         method: 'DELETE',
+       });
+   
+       if (!response.ok) {
+         throw new Error('Failed to delete car');
+       }
+       onDelete(saved_car.id);
+   
+       console.log('Car deleted successfully');
+    } catch (error) {
+       console.error('Error deleting car:', error.message);
+    }
+   };
+
+ const formatMaintenanceDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+ 
 
  const handleTitleSave = async (newTitle) => {
     try {
@@ -20,7 +43,7 @@ function SavedCarCard({ car, setSavedCar }) {
       }
 
       // Update the saved_car state with the new title
-      setSavedCar((prevState) => ({ ...prevState, name: newTitle }));
+      setSavedCarName((prevState) => ({ ...prevState, name: newTitle }));
 
       console.log('Car name updated successfully');
     } catch (error) {
@@ -29,6 +52,7 @@ function SavedCarCard({ car, setSavedCar }) {
  };
 
  return (
+    <div className="grid">
     <div className="text-center">
       <article style={{}}>
         <EditableTitle saved_car={saved_car} onSave={handleTitleSave} />
@@ -38,17 +62,26 @@ function SavedCarCard({ car, setSavedCar }) {
         <p>Year: {car_info.year}</p>
         <br></br>
         <details style={{ border: '1px solid #000000', }}>
-          <summary>general info: </summary>
-          <p>{car_info.general_info}</p>
-        </details>
+  <summary>General Info: </summary>
+  {car_info.general_info && (
+    <ul>
+      {Object.entries(JSON.parse(car_info.general_info)).map(([key, value]) => (
+        <li key={key}>
+          <strong>{key}:</strong> {value}
+        </li>
+      ))}
+    </ul>
+  )}
+</details>
         <details style={{ border: '1px solid #000000', }}>
           <summary>Maintenance Info: </summary>
-          <p>Latest oil change: {maintenance_info.inputed_oil_service}</p>
-          <p>Latest tire rotation: {maintenance_info.inputed_tire_roto}</p>
-          <p>Latest brake fluid change: {maintenance_info.inputed_break_fluid_service}</p>
+          <p>Latest oil change: {formatMaintenanceDate(maintenance_info.inputed_oil_service)}</p>
+          <p>Latest tire rotation: {formatMaintenanceDate(maintenance_info.inputed_tire_roto)}</p>
+          <p>Latest brake fluid change: {formatMaintenanceDate(maintenance_info.inputed_break_fluid_service)}</p>
         </details>
-        {/* Add more details as needed */}
+        <button onClick={handleDelete} class="material-symbols-outlined contrast" style={{'width': '50px'}}>delete</button>
       </article>
+    </div>
     </div>
  );
 

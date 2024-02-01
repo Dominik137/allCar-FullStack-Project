@@ -1,11 +1,15 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiPencilLine } from 'react-icons/ri';
 
 const EditableTitle = ({ saved_car, onSave }) => {
   const [isEditing, setEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(saved_car.name);
-  const [rerenderKey, setRerenderKey] = useState(0); // Add a rerenderKey state
+  const [rerenderKey, setRerenderKey] = useState(0);
+  
+  useEffect(() => {
+    setNewTitle(saved_car.name);
+ }, [saved_car]);
 
   const handleEditClick = () => {
       setEditing(true);
@@ -20,7 +24,6 @@ const EditableTitle = ({ saved_car, onSave }) => {
   const handleInputChange = (e) => {
       setNewTitle(e.target.value);
   };
-
   return (
       <div className="relative" key={rerenderKey}>
           {isEditing ? (
@@ -38,10 +41,10 @@ const EditableTitle = ({ saved_car, onSave }) => {
           ) : (
               <h2
                   onClick={handleEditClick}
-                  className="font-sixty4 text-2xl hover:border border-transparent hover:border-black hover:cursor-pointer relative"
+                  className="font-sixty4 text-2xl pencil hover:border border-transparent hover:border-black hover:cursor-pointer relative"
               >
-                  {saved_car.name}
-                  <span className="ml-2 text-black opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
+                  {newTitle}
+                  <span className="font-sixty4 text-2xl hover:border-black ">
                       <RiPencilLine />
                   </span>
               </h2>

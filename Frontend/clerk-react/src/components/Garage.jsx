@@ -22,6 +22,10 @@ function Garage({ user }) {
       setSavedCarName(event.target.value);
     };
   
+    const handleDeleteCar = (carId) => {
+      // Filter out the deleted car from the userCars state
+      setUserCars((prevCars) => prevCars.filter((car) => car.saved_car.id !== carId));
+    };
     useEffect(() => {
       // Fetch data from the API
       fetch(`/api/garage/${user?.id}`)
@@ -182,12 +186,22 @@ async function saveToGarage() {
        }
        return response.json();
   })
+  
   .then(data => {
        console.log('Post successful:', data);
   })
+  
   .catch(error => {
        console.error('Error:', error);
   });
+
+  const response = await fetch(`/api/saved_cars/${savedCarId}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch the saved car with ID ${savedCarId}`);
+  }
+  const savedCar = await response.json();
+
+  setUserCars((prevCars) => [...prevCars, savedCar]);
  }
  
 
@@ -201,17 +215,18 @@ const handleSavingCar = () => {
     return (
         <>
           <div className="garage-page">
-      <h2 className="text-center text-3xl">My Garage</h2>
+            <br></br>
+      <h2 className="text-center text-4xl font-sixty4">My Garage</h2>
       <div className="car-list">
         {userCars.map((car, index) => (
-          <SavedCarCard key={index} car={car}/>
+          <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar}/>
         ))}
       </div>
     </div>
     <div className="grid">
     
   <details  style={{}}>
-    <summary className="text-center">Add A Car!</summary>
+    <summary  style={{color: "white" ,textAlign: "center", height: "40px" ,width: "1000px" ,backgroundColor: 'Black'}}  className="text-center font-newroman" >Add A Car!</summary>
       <form onSubmit={handleGetCar}>
         <div className="text-center">
             <h1>Select A Car!</h1>

@@ -18,8 +18,11 @@ function Nav({navUser, user}) {
           <li>
           {user ? (
               <>
-              <li className="font-sixty4">
+              <li className="font-sixty4 boarde">
+              <div className="border border-white">
+                {/* trying to figure ouat clean boarder */}
                 <Link className="text-white hover:text-gray-300 block" to="/dashboard">Home</Link>
+                </div>
               </li>
               <li className="font-sixty4">
                 <Link className="text-white hover:text-gray-300 block" to="/garage">Garage</Link>
@@ -30,6 +33,7 @@ function Nav({navUser, user}) {
             </>
             ) : (
             <li>
+              
               <a href="#" className="text-white hover:text-gray-300 block"><SignInButton /></a>
             </li>
           )}

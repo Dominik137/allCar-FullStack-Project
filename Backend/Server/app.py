@@ -69,7 +69,7 @@ def saved_cars():
         db.session.commit()
         return jsonify(new_car.to_dict(), 200)
 
-@app.route('/api/saved_cars/<int:car_id>', methods=["GET", "POST", "PATCH"])
+@app.route('/api/saved_cars/<int:car_id>', methods=["GET", "POST", "PATCH", "DELETE"])
 def saved_cars_by_id(car_id):
     if request.method == "GET":
         saved_car = SavedCar.query.get(car_id)
@@ -97,6 +97,21 @@ def saved_cars_by_id(car_id):
         db.session.commit()
 
         return jsonify({'message': 'Car name updated successfully.'})
+    elif request.method == "DELETE":
+        saved_car = SavedCar.query.get(car_id)
+        if saved_car is None:
+            return jsonify({'message': 'No car found with this ID.'}), 404
+
+        car_info = CarInfo.query.get(saved_car.car_info_id)
+        maintenance_info = MaintenanceInfo.query.get(saved_car.maintenance_info_id)
+
+        db.session.delete(car_info)
+        db.session.delete(maintenance_info)
+        db.session.delete(saved_car)
+
+        db.session.commit()
+
+        return jsonify({'message': 'Car and associated info deleted successfully.'})
         
 @app.route('/api/garage', methods=['POST'])
 def create_garage():
