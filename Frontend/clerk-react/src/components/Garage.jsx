@@ -13,14 +13,25 @@ function Garage({ user }) {
     const [oilDate, setOilDate] = useState(null);
     const [tireRotationDate, setTireRotationDate] = useState(null);
     const [brakeFluidChangeDate, setBrakeFluidChangeDate] = useState(null);
+    const [oilChangeMileage, setOilChangeMileage] = useState('');
+    const [rotationDate, setRotationDate] = useState('');
 
     const [savedCarName, setSavedCarName] = useState('');
+    const [savedCarMileage, setSavedCarMileage] = useState('')
 
     const [userCars, setUserCars] = useState([]);
+
+    const handleOilMileageChange = (event) => {
+      setOilChangeMileage(event.target.value);
+    };
 
     const handleNameChange = (event) => {
       setSavedCarName(event.target.value);
     };
+
+    const handleCarMileage = (event) =>{
+      setSavedCarMileage(event.target.value)
+    }
   
     const handleDeleteCar = (carId) => {
       // Filter out the deleted car from the userCars state
@@ -84,7 +95,7 @@ function Garage({ user }) {
                 year: car[0]?.year,
                 make: car[0]?.make,
                 model: car[0]?.model,
-                mileage: 2,
+                mileage: savedCarMileage,
                 // ^replace this with own user input
                 general_info: JSON.stringify(general_info),
                 engine_info: "nothing yet",
@@ -112,6 +123,7 @@ function Garage({ user }) {
         inputed_oil_service: oilDate,
         inputed_tire_roto: tireRotationDate,
         inputed_break_fluid_service: brakeFluidChangeDate,
+        mileage_oil_service: oilChangeMileage
     };
    return fetch('/api/maintenance_info', {
     method: 'POST',
@@ -253,7 +265,16 @@ const handleSavingCar = () => {
         dateFormat="MM/dd/yyyy"
         placeholderText="Select a date"
       />
-      <label className="text-black" htmlFor="tireRotationDatePicker">Tire Rotation Date:</label>
+      <label className="text-black" htmlFor="mileageInput">Input Mileage for oil service:</label>
+      <input
+        id="mileageInput"
+        placeholder="Input Mileage"
+        style={{ width: '260px' }}
+        type="number"
+        value={oilChangeMileage}
+        onChange={handleOilMileageChange}
+      />
+      <label className="text-black"  htmlFor="tireRotationDatePicker">Tire Rotation Date:</label>
       <DatePicker
         id="tireRotationDatePicker"
         selected={tireRotationDate}
@@ -281,8 +302,10 @@ const handleSavingCar = () => {
         {car ? 
         <article>city mpg: {car[0]?.city_mpg}, highway mpg: {car[0]?.highway_mpg}, 
         combined mpg: {car[0]?.combination_mpg}, cylinders: {car[0]?.cylinders}, drive type: {car[0]?.drive}, class: {car[0]?.class} 
-        <label htmlFor="carName">Give your car a name:</label>
+        <label className="underline underline-offset-2" htmlFor="carName">Give your car a name:</label>
         <input type="text" id="carName" value={savedCarName} onChange={handleNameChange} />
+        <label className="underline underline-offset-2" htmlFor="carMileage">Enter Cars Mileage:</label>
+        <input type="text" id="carMileage" value={savedCarMileage} onChange={handleCarMileage} />
         <button onClick={handleSavingCar}>Save car to Garage!</button>
         </article>
         : ""

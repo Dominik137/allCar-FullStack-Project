@@ -63,6 +63,7 @@ class MaintenanceInfo(db.Model, SerializerMixin):
     rec_oil_service = db.Column(db.String)
     rec_oil_type = db.Column(db.String)
     inputed_oil_service = db.Column(db.String)
+    mileage_oil_service = db.Column(db.Integer)
     rec_tire_roto = db.Column(db.String)
     inputed_tire_roto = db.Column(db.String)
     rec_tire_psi = db.Column(db.String)

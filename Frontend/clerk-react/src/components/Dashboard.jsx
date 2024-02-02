@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import DashboardCars from "./DashboardCars";
+import MaintenanceReminders from "./MaintenanceReminders";
 
 function Dashboard({ user }) {
   const [userCars, setUserCars] = useState([]);
@@ -37,7 +38,9 @@ function Dashboard({ user }) {
         </div>
         <div className="basis-1/3">
         <h1 className="text-3xl">Maintenance Reminders</h1>
-        
+        {userCars.map((car) => (
+            <MaintenanceReminders key={car.id} car={car} />
+          ))}
         </div>
       </div>
       <div className="flex flex-row text-center">

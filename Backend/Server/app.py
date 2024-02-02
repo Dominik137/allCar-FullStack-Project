@@ -47,6 +47,25 @@ def car_info():
         db.session.add(new_car_info)
         db.session.commit()
         return jsonify(new_car_info.to_dict(), 200)
+    return jsonify(car_info.to_dict())
+
+@app.route('/api/car_info/<int:car_info_id>', methods=["GET", "POST", "PATCH"])
+def car_info_id(car_info_id):
+    car_info = CarInfo.query.get_or_404(car_info_id)
+
+    if request.method == "GET":
+        # Handle GET logic
+        pass
+    elif request.method == "POST":
+        # Handle POST logic
+        pass
+    elif request.method == "PATCH":
+        if 'mileage' in request.json:
+            car_info.mileage = request.json['mileage']
+
+        db.session.commit()
+
+    return jsonify(car_info.to_dict())
     
 @app.route('/api/maintenance_info', methods=["Get", "POST"])
 def maintenance_info():
@@ -54,7 +73,7 @@ def maintenance_info():
         pass
     elif request.method == "POST":
         new_maintenance_info = MaintenanceInfo(inputed_oil_service=request.json['inputed_oil_service'], inputed_tire_roto=request.json['inputed_tire_roto']
-                                               ,inputed_break_fluid_service=request.json['inputed_break_fluid_service'])
+                                               ,inputed_break_fluid_service=request.json['inputed_break_fluid_service'],mileage_oil_service=request.json['mileage_oil_service'])
         db.session.add(new_maintenance_info)
         db.session.commit()
         return jsonify(new_maintenance_info.to_dict(), 200)

@@ -1,6 +1,8 @@
 // SavedCarCard.js
 import React from "react";
+import EditMileage from './EditMileage';
 import EditableTitle from "./EditableTitle"; // Import the EditableTitle component
+import { RiPencilLine } from 'react-icons/ri';
 
 function SavedCarCard({ car, setSavedCarName, onDelete }) {
  const { saved_car, car_info, maintenance_info } = car;
@@ -51,6 +53,28 @@ function SavedCarCard({ car, setSavedCarName, onDelete }) {
     }
  };
 
+ const handleMileageSave = async (newMileage) => {
+  try {
+    const response = await fetch(`/api/car_info/${car.car_info.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ mileage: newMileage }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update mileage');
+    }
+
+    console.log('Mileage updated successfully');
+    // You might want to update the state or perform other actions here if needed.
+  } catch (error) {
+    console.error('Error updating mileage:', error.message);
+  }
+};
+
+
  return (
     <div className="grid">
     <div className="text-center">
@@ -60,6 +84,7 @@ function SavedCarCard({ car, setSavedCarName, onDelete }) {
         <p>Make: {car_info.make}</p>
         <p>Model: {car_info.model}</p>
         <p>Year: {car_info.year}</p>
+          <EditMileage initialMileage={car_info.mileage} onSave={handleMileageSave}  />
         <br></br>
         <details style={{ border: '1px solid #000000', }}>
   <summary>General Info: </summary>
