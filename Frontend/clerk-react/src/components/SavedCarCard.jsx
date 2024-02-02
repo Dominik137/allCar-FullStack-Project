@@ -78,7 +78,7 @@ function SavedCarCard({ car, setSavedCarName, onDelete }) {
  return (
     <div className="grid">
     <div className="text-center">
-      <article style={{}}>
+    <article style={{ width: 'auto', height: 'auto',  }}>
         <EditableTitle saved_car={saved_car} onSave={handleTitleSave} />
         <br></br>
         <p>Make: {car_info.make}</p>

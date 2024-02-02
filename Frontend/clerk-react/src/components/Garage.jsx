@@ -229,16 +229,18 @@ const handleSavingCar = () => {
           <div className="garage-page">
             <br></br>
       <h2 className="text-center text-4xl font-sixty4">My Garage</h2>
-      <div className="car-list">
+      <div className="grid items-center justify-center">
         {userCars.map((car, index) => (
           <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar}/>
         ))}
       </div>
     </div>
-    <div className="grid">
     
-  <details  style={{}}>
-    <summary  style={{color: "white" ,textAlign: "center", height: "40px" ,width: "1000px" ,backgroundColor: 'Black'}}  className="text-center font-newroman" >Add A Car!</summary>
+    <div className="grid ">
+  <details  >
+    <summary style={{color: "white" ,textAlign: "center", height: "40px" ,width: "1000px" ,backgroundColor: 'Black',  marginLeft: '350px'}}  className="text-center font-newroman" >
+      <h1 className="font-sixty4 text-white pt-2">Add a Car!</h1>
+      </summary>
       <form onSubmit={handleGetCar}>
         <div className="text-center">
             <h1>Select A Car!</h1>
@@ -293,9 +295,9 @@ const handleSavingCar = () => {
         </form>
     </div>
     </details>
-    </div>
-    <div className="grid">
-      <div></div>
+    
+    
+      
       <div className="text-center pt-8 ">
         <h1 className="underline underline-offset-2">Searched Car!</h1>
         <h2>{car[0]?.year} {car[0]?.make} {car[0]?.model}</h2>
@@ -310,8 +312,6 @@ const handleSavingCar = () => {
         </article>
         : ""
         }
-      </div>
-      <div className="text-center">
       </div>
       
     </div>
