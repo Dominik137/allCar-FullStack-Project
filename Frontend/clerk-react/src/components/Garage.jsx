@@ -4,7 +4,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 
 function Garage({ user }) {
-    const apiKey = 't07C/oLDrXGzgVa0X38y/Q==htfF9E6MVnai5NXW';
+
+  const apiKey = import.meta.env.VITE_API_KEY;
+
+
     const [model, setModel] = useState('');
     const [year, setYear] = useState('');
     const [make, setMake] = useState('');
@@ -49,12 +52,11 @@ function Garage({ user }) {
 
     const handleGetCar = async (event) => {
       event.preventDefault();
-
-        const year = event.target.elements.year.value;
-        const make = event.target.elements.make.value;
-        const model = event.target.elements.model.value;
-
-
+    
+      const year = event.target.elements.year.value;
+      const make = event.target.elements.make.value;
+      const model = event.target.elements.model.value;
+    
       try {
         const response = await fetch(`https://api.api-ninjas.com/v1/cars?make=${make}&year=${year}&limit=1&model=${model}`, {
           method: 'GET',
@@ -63,14 +65,20 @@ function Garage({ user }) {
             'Content-Type': 'application/json',
           },
         });
-
+    
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
-
+    
         const result = await response.json();
-        console.log(result)
-        setCar(result);
+        console.log(result);
+    
+        if (result.length > 0) {
+          setCar(result);
+        } else {
+          // Display an alert if the result is an empty array
+          alert('Enter a valid car');
+        }
       } catch (error) {
         console.error('Error: ', error.message);
       }
@@ -220,6 +228,7 @@ async function saveToGarage() {
 
 const handleSavingCar = () => {
   saveToGarage()
+  setCar('')
 };
 
 
@@ -237,11 +246,12 @@ const handleSavingCar = () => {
     </div>
     
     <div className="grid ">
-  <details  >
+  <details >
     <summary style={{color: "white" ,textAlign: "center", height: "40px" ,width: "1000px" ,backgroundColor: 'Black',  marginLeft: '350px'}}  className="text-center font-newroman" >
       <h1 className="font-sixty4 text-white pt-2">Add a Car!</h1>
       </summary>
       <form onSubmit={handleGetCar}>
+        {!car ?
         <div className="text-center">
             <h1>Select A Car!</h1>
             <label className="text-black" htmlFor="year">Year:</label>
@@ -252,7 +262,10 @@ const handleSavingCar = () => {
             <input type="text" name="model" placeholder="Model" />
             <button className="color-black" type="submit">Search</button>
             </div>
+            : ""}
       </form>
+      {car ?
+      
     <div className="text-center">
         <form>
           <h1>
@@ -292,16 +305,19 @@ const handleSavingCar = () => {
         dateFormat="MM/dd/yyyy"
         placeholderText="Select a date"
       />
-        </form>
-    </div>
-    </details>
-    
-    
       
+        </form>
+        
+    </div>
+    : ""}
+    
+    
+    
+    {car ?
       <div className="text-center pt-8 ">
         <h1 className="underline underline-offset-2">Searched Car!</h1>
         <h2>{car[0]?.year} {car[0]?.make} {car[0]?.model}</h2>
-        {car ? 
+        
         <article>city mpg: {car[0]?.city_mpg}, highway mpg: {car[0]?.highway_mpg}, 
         combined mpg: {car[0]?.combination_mpg}, cylinders: {car[0]?.cylinders}, drive type: {car[0]?.drive}, class: {car[0]?.class} 
         <label className="underline underline-offset-2" htmlFor="carName">Give your car a name:</label>
@@ -310,11 +326,18 @@ const handleSavingCar = () => {
         <input type="text" id="carMileage" value={savedCarMileage} onChange={handleCarMileage} />
         <button onClick={handleSavingCar}>Save car to Garage!</button>
         </article>
-        : ""
-        }
+        
+        
       </div>
       
+      : ''
+      }
+      
+      </details>
+      
     </div>
+    
+
     
   </>
      );

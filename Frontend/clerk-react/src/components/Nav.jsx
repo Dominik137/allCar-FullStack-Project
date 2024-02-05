@@ -11,34 +11,33 @@ function Nav({navUser, user}) {
     <>
     <div className="flex h-screen  bg-gray-800">
       {/* Sidebar */}
-      <div className="w-48 bg-black p-4">
+      <div className="w-48 bg-black p-4 ">
         
         {/* Menu Items */}
-        <ul className="space-y-2">
-          <li>
+        <div className="space-y-2 ">
+          
           {user ? (
               <>
-              <li className="font-sixty4 boarde">
-              <div className="border border-white">
+            
+              <div className="font-sixty4">
                 {/* trying to figure ouat clean boarder */}
-                <Link className="text-white hover:text-gray-300 block" to="/dashboard">Home</Link>
+                <Link className="text-white hover:text-gray-300 block border" to="/dashboard">Home</Link>
                 </div>
-              </li>
-              <li className="font-sixty4">
+              <div className="font-sixty4 border">
                 <Link className="text-white hover:text-gray-300 block" to="/garage">Garage</Link>
-              </li>
-              <li className="font-sixty4">
-                <a href="#"  className="appearance-none text-white hover:text-gray-300 block"><SignOutButton /></a>
-              </li>
+              </div>
+              <div className="text-white hover:text-gray-300 block font-sixty4 border">
+                < SignOutButton />
+              </div>
             </>
             ) : (
-            <li>
+           
               
-              <a href="#" className="text-white hover:text-gray-300 block"><SignInButton /></a>
-            </li>
+              <a href="#" className="text-white hover:text-gray-300 block font-sixty4 border"><SignInButton /></a>
+            
           )}
-          </li>
-        </ul>
+          
+        </div>
       </div>
 
       {/* Main Content */}

@@ -3,9 +3,12 @@ import React from "react";
 import EditMileage from './EditMileage';
 import EditableTitle from "./EditableTitle"; // Import the EditableTitle component
 import { RiPencilLine } from 'react-icons/ri';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function SavedCarCard({ car, setSavedCarName, onDelete }) {
  const { saved_car, car_info, maintenance_info } = car;
+
+ const navigate = useNavigate()
 
  const handleDelete = async () => {
     try {
@@ -72,12 +75,24 @@ function SavedCarCard({ car, setSavedCarName, onDelete }) {
   } catch (error) {
     console.error('Error updating mileage:', error.message);
   }
+
+  const handleDivClick = (event) => {
+    // Check if the click occurred on a button within the div
+    if (event.target.tagName.toLowerCase() === 'button') {
+      // If the click was on a button, handle the button click
+      handleDelete();
+    } else {
+      // If the click was not on a button, navigate to the specified page
+      navigate(`/car-page/${car.saved_car.id}`);
+    }
+  };
+  
 };
 
 
  return (
     <div className="grid">
-    <div className="text-center">
+    <div className="text-center cursor-pointer" >
     <article style={{ width: 'auto', height: 'auto',  }}>
         <EditableTitle saved_car={saved_car} onSave={handleTitleSave} />
         <br></br>
@@ -104,7 +119,10 @@ function SavedCarCard({ car, setSavedCarName, onDelete }) {
           <p>Latest tire rotation: {formatMaintenanceDate(maintenance_info.inputed_tire_roto)}</p>
           <p>Latest brake fluid change: {formatMaintenanceDate(maintenance_info.inputed_break_fluid_service)}</p>
         </details>
-        <button onClick={handleDelete} class="material-symbols-outlined contrast" style={{'width': '50px'}}>delete</button>
+        <div className="space-x-1.5">
+        <button onClick={handleDelete} className="material-symbols-outlined contrast" style={{'width': '50px'}}>delete</button>
+        <button onClick={() => navigate(`/car-page/${car.saved_car.id}`)} className="material-symbols-outlined contrast" style={{'width': '50px'}}>arrow_forward</button>
+        </div>
       </article>
     </div>
     </div>

@@ -6,6 +6,8 @@
 # Remote library imports
 from flask import request, make_response, jsonify
 from flask_restful import Resource
+from openai import OpenAI
+
 
 # Local imports
 from config import app, db, api
@@ -158,6 +160,8 @@ def get_saved_cars(user_id):
         })
 
     return jsonify({'cars': cars_list}), 200
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

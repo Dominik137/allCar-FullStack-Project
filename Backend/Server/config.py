@@ -36,7 +36,8 @@ db.init_app(app)
 
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SECRET_KEY'] = "secret_key"
+secret_key = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = secret_key
 # for handeling our cookies and session
 
 api = Api(app)
