@@ -14,7 +14,7 @@ return (
     <br></br>
     <div className="max-w-sm mx-auto bg-white shadow-lg rounded-md overflow-hidden">
       <div className="px-6 py-4">
-        <h1 className="text-2xl font-bold mb-2">{car.saved_car.name}</h1>
+        <h1 className="text-2xl font-sixty4 mb-2">{car.saved_car.name}</h1>
         <h2 className="text-xl font-newroman ">{car.car_info.make}: {car.car_info.model}</h2>
         <h1 className="text-lg font-bold mb-2">The Last Oil Service was:</h1>
         <p className="text-gray-700">{formattedDate}</p>

@@ -6,6 +6,20 @@ function CarPage(){
     const navigate = useNavigate()
 
     const [car, setCar] = useState(null)
+    const [selectedDetails, setSelectedDetails] = useState(null);
+
+    const handleWheelsClick = async () => {
+        setSelectedDetails(car.car_info.wheel_info);
+    };
+
+    const handleLightsClick = async () => {
+        setSelectedDetails(car.car_info.light_info);
+    };
+
+    const handleEngineClick = async () => {
+        setSelectedDetails(car.car_info.engine_info);
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,7 +31,7 @@ function CarPage(){
                 }
     
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 setCar(data);
             } catch (error) {
                 console.error('Error during fetch:', error);
@@ -37,6 +51,8 @@ function CarPage(){
         // Render loading state or return null
         return <></>;
     }
+
+
 
 
     return(
@@ -64,16 +80,20 @@ function CarPage(){
                 </div>
             </div>
             <div className=" place-items-center pt-10 text-center">
-                <div className=" grid text-center space-x-3" >
-                <span className="border-2 border-black font-newroman cursor-pointer "> Wheels</span>
-                <span className="border-2 border-black font-newroman cursor-pointer"> Lights</span>
-                <span className="border-2 border-black font-newroman cursor-pointer"> Engine</span>
-                </div>
-                <p className="font-newroman text-2xl underline pt-8">{car.car_info.year}: {car.car_info.make} {car.car_info.model}
+                
+                <p className="font-newroman text-2xl underline pb-12">{car.car_info.year}: {car.car_info.make} {car.car_info.model}
                 <br></br>
                 Mileage: {car.car_info.mileage}
                  </p>
+                 
+                 <div className="relative inline-block">
+                 <div className=" grid text-center space-x-3s relative " >
+                <span className="border-2 border-black font-newroman cursor-pointer relative top-16 left-8 " onClick={handleWheelsClick}> Wheels</span>
+                <span className="border-2 border-black  font-newroman cursor-pointer relative left-56 top-28" onClick={handleLightsClick}> Lights</span>
+                <span className="border-2 border-black font-newroman cursor-pointer relative right-4 top-16" onClick={handleEngineClick}> Engine</span>
+                </div>
                 <img src="../src/pics/sedan1.png"   />
+                </div>
             </div>
             <div className="grid place-items-center">
             <div className="text-center border-4 border-black pl-2 pr-2">
@@ -84,6 +104,16 @@ function CarPage(){
                 ))}
                 </div>
             </div>
+            </div>
+            <div className="grid place-items-center">
+                {selectedDetails ? (
+                    <article>
+                    <h1>{selectedDetails}</h1>
+                    
+                    </article>
+                ) : (
+                    <></>
+                )}
             </div>
         </>
     )

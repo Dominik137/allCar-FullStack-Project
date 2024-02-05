@@ -30,7 +30,7 @@ function Dashboard({ user }) {
         <h1 className="text-3xl "> TBD</h1>
         </div>
         <div className="basis-1/3 pt-32">
-          <h1 className="text-2xl">Your Cars</h1>
+          <h1 className="text-3xl font-newroman">Your Cars</h1>
           {/* Map through the userCars array and render the Car component for each car */}
           {userCars.map((car) => (
             <DashboardCars key={car.id} car={car} />

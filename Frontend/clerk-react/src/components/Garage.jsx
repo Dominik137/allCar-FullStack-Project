@@ -246,10 +246,12 @@ const handleSavingCar = () => {
     </div>
     
     <div className="grid ">
-  <details >
-    <summary style={{color: "white" ,textAlign: "center", height: "40px" ,width: "1000px" ,backgroundColor: 'Black',  marginLeft: '350px'}}  className="text-center font-newroman" >
+  <details  >
+  
+    <summary  style={{color: "white" ,textAlign: "center",backgroundColor: 'Black' }}  className="text-center font-newroman" >
       <h1 className="font-sixty4 text-white pt-2">Add a Car!</h1>
       </summary>
+      
       <form onSubmit={handleGetCar}>
         {!car ?
         <div className="text-center">
