@@ -50,7 +50,7 @@ class CarInfo(db.Model, SerializerMixin):
     mileage = db.Column(db.Integer, nullable = False)
     general_info = db.Column(db.String, nullable = False)
     engine_info = db.Column(db.String)
-    light_info = db.Column(db.String)
+    body_info = db.Column(db.String)
     wheel_info = db.Column(db.String)
 
     saved_car = db.relationship('SavedCar', back_populates='car_info', cascade="all, delete-orphan")

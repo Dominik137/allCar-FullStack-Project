@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 
 
 function DashboardCars({ car }) {
-    // console.log(car)
+    console.log(car)
 const navigate = useNavigate()
 
 // onClick={() => navigate(`/edit-workout/${workout.id}`)}

@@ -48,7 +48,48 @@ def user():
 def car_info():
     if request.method == "POST":
         request_data = request.json  # Storing request.json in a variable
-        
+        def get_body_info():
+            login_url = "https://carapi.app/api/auth/login"
+            bodies_url = "https://carapi.app/api/bodies"
+
+            # Prepare the request body for authentication
+            login_data = {
+                "api_token": api_token,
+                "api_secret": api_secret
+            }
+
+            # Authenticate and get the JWT token
+            response = requests.post(login_url, json=login_data)
+
+            # Check if the authentication was successful
+            if response.status_code == 200:
+                jwt_token = response.text.strip()  # Extract the JWT token
+                headers = {
+                    "Authorization": f"Bearer {jwt_token}",
+                    "Accept": "application/json"
+                }
+                
+                # Make a request to fetch bodies data
+                print(request_data.get('modelForEng'))
+                params = {
+                    "make": request_data.get('make'),
+                    "model": request_data.get('modelForEng'),
+                    "year": request_data.get('year'),
+                    "id": 1,
+                    "limit": 1
+                }
+                bodies_response = requests.get(bodies_url, params=params, headers=headers)
+
+                # Check if the request was successful
+                if bodies_response.status_code == 200:
+                    bodies_data = bodies_response.json()
+                    print("Bodies data:", bodies_data['data'])
+                    return (bodies_data['data'])
+                else:
+                    print("Failed to fetch bodies data:", bodies_response.status_code, "-", bodies_response.text)
+            else:
+                print("Failed to authenticate:", response.status_code, "-", response.text)
+        body_info = get_body_info()
         def get_engine_info():
             login_url = "https://carapi.app/api/auth/login"
             engine_data_url = "https://carapi.app/api/engines?limit=&sort=make_model_trim_id&direction=asc&verbose=yes"
@@ -69,11 +110,12 @@ def car_info():
                     "Authorization": f"Bearer {jwt_token}",
                     "Accept": "application/json"
                 }
-                print(jwt_token)
+                # print(jwt_token)
                 # Make a request to fetch engine data
+                print(request_data.get('modelForEng'))
                 params = {
                     "make": request_data.get('make'),
-                    "model": request_data.get('model'),
+                    "model": request_data.get('modelForEng'),
                     "year": request_data.get('year'),
                     "id": 1
                 }
@@ -95,10 +137,10 @@ def car_info():
         # Call the get_engine_info function with the extracted parameters
         engine_info = get_engine_info()
         print(engine_info)
-        if engine_info is not None:
+        if engine_info and body_info is not None:
             new_car_info = CarInfo(year=request_data.get('year'), make=request_data.get('make'), model=request_data.get('model'), mileage=request_data.get('mileage'),
                                 general_info=request_data.get('general_info'), engine_info=json.dumps(engine_info),
-                                light_info=request_data.get('light_info'),
+                                body_info=json.dumps(body_info),
                                 wheel_info=request_data.get('wheel_info'))
             
             db.session.add(new_car_info)

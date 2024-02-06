@@ -1,11 +1,12 @@
 import requests
 import os
+
 api_token = os.getenv("CARAPI_API_TOKEN")
 api_secret = os.getenv("CARAPI_API_SECRET")
-# print(api_secret)
+
 # Define the endpoint URL
 login_url = "https://carapi.app/api/auth/login"
-engine_data_url = "https://carapi.app/api/engines?limit=&sort=make_model_trim_id&direction=asc&verbose=yes"
+bodies_url = "https://carapi.app/api/bodies"
 
 # Prepare the request body for authentication
 login_data = {
@@ -23,21 +24,21 @@ if response.status_code == 200:
         "Authorization": f"Bearer {jwt_token}",
         "Accept": "application/json"
     }
-    # print(jwt_token)
-    # Make a request to fetch engine data
+    
+    # Make a request to fetch bodies data
     params = {
+        "year": "2019",
         "make": "Volkswagen",
         "model": "GTI",
-        "year": "2019",
         "id": 1
     }
-    engine_response = requests.get(engine_data_url, params=params, headers=headers)
+    bodies_response = requests.get(bodies_url, params=params, headers=headers)
 
     # Check if the request was successful
-    if engine_response.status_code == 200:
-        engine_data = engine_response.json()
-        print("Engine data:", engine_data['data'])
+    if bodies_response.status_code == 200:
+        bodies_data = bodies_response.json()
+        print("Bodies data:", bodies_data['data'])
     else:
-        print("Failed to fetch engine data:", engine_response.status_code, "-", engine_response.text)
+        print("Failed to fetch bodies data:", bodies_response.status_code, "-", bodies_response.text)
 else:
     print("Failed to authenticate:", response.status_code, "-", response.text)

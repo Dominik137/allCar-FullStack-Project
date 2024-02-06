@@ -8,7 +8,7 @@ function Garage({ user }) {
   const apiKey = import.meta.env.VITE_API_KEY;
 
 
-    const [model, setModel] = useState('');
+    const [modelForEng, setModelForEng] = useState('');
     const [year, setYear] = useState('');
     const [make, setMake] = useState('');
     const [car, setCar] = useState('')
@@ -49,7 +49,7 @@ function Garage({ user }) {
     }, [user?.id]);
   
 
-
+    
     const handleGetCar = async (event) => {
       event.preventDefault();
     
@@ -57,6 +57,8 @@ function Garage({ user }) {
       const make = event.target.elements.make.value;
       const model = event.target.elements.model.value;
     
+      setModelForEng(model)
+      
       try {
         const response = await fetch(`https://api.api-ninjas.com/v1/cars?make=${make}&year=${year}&limit=1&model=${model}`, {
           method: 'GET',
@@ -83,7 +85,7 @@ function Garage({ user }) {
         console.error('Error: ', error.message);
       }
     };
-
+   
     async function handleSaveCarInfo(){
         const general_info = {
             city_mpg: car[0]?.city_mpg,
@@ -91,7 +93,7 @@ function Garage({ user }) {
             combination_mpg: car[0]?.combination_mpg,
             cylinders: car[0]?.cylinders,
             drive: car[0]?.drive,
-            class: car[0]?.class
+            class: car[0]?.class,    
         }
         
         return fetch('/api/car_info',{
@@ -103,11 +105,12 @@ function Garage({ user }) {
                 year: car[0]?.year,
                 make: car[0]?.make,
                 model: car[0]?.model,
+                modelForEng: modelForEng,
                 mileage: savedCarMileage,
                 // ^replace this with own user input
                 general_info: JSON.stringify(general_info),
                 engine_info: "nothing yet",
-                light_info: "nothing yet",
+                body_info: "nothing yet",
                 wheel_info: "nothing yet"
             })
         }) 
