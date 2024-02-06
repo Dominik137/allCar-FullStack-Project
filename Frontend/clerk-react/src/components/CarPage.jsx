@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
+import json5 from 'json5'; // Import the json5 library
 function CarPage(){
     const params = useParams();
     const carId = params.id;
@@ -17,7 +18,13 @@ function CarPage(){
     };
 
     const handleEngineClick = async () => {
-        setSelectedDetails(car.car_info.engine_info);
+        // Parse the engine info from JSON string to an object
+        const engineInfo = car.car_info.engine_info;
+        // console.log(engineInfo)
+        const parsedData = JSON.parse(engineInfo);
+        // console.log(parsedData)
+        // Set the parsed engine info as the selected details
+        setSelectedDetails(parsedData);
     };
 
 
@@ -106,15 +113,28 @@ function CarPage(){
             </div>
             </div>
             <div className="grid place-items-center">
-                {selectedDetails ? (
-                    <article>
-                    <h1>{selectedDetails}</h1>
-                    
-                    </article>
-                ) : (
-                    <></>
-                )}
-            </div>
+  {car.car_info.year >= 2015 && car.car_info.year <= 2020 ? (
+    <article>
+      {selectedDetails && selectedDetails.map((engine, index) => (
+        <div key={index}>
+          <p>Engine Type: {engine.engine_type}</p>
+          <p>Fuel Type: {engine.fuel_type}</p>
+          <p>Cylinders: {engine.cylinders}</p>
+          <p>Size: {engine.size}</p>
+          <p>Horsepower: {engine.horsepower_hp} HP</p>
+          <p>Torque: {engine.torque_ft_lbs} ft-lbs</p>
+          <p>Valves: {engine.valves}</p>
+          <p>Valve Timing: {engine.valve_timing}</p>
+          <p>Cam Type: {engine.cam_type}</p>
+          <p>Drive Type: {engine.drive_type}</p>
+          <p>Transmission: {engine.transmission}</p>
+        </div>
+      ))}
+    </article>
+  ) : (
+    <p>Sorry, only cars between 2015 and 2020 have engine info</p>
+  )}
+</div>
         </>
     )
 }

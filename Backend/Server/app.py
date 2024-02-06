@@ -7,7 +7,9 @@
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from openai import OpenAI
-
+import requests
+import json
+import os
 
 # Local imports
 from config import app, db, api
@@ -15,6 +17,10 @@ from models import *
 # Add your model imports
 
 # Views go here!
+
+api_token = os.getenv("CARAPI_API_TOKEN")
+api_secret = os.getenv("CARAPI_API_SECRET")
+
 
 @app.route('/')
 def index():
@@ -40,16 +46,71 @@ def user():
 
 @app.route('/api/car_info', methods=["Get", "POST"])
 def car_info():
-    if request.method == "GET":
-        pass
-    elif request.method == "POST":
-        new_car_info = CarInfo(year=request.json['year'], make=request.json['make'], model=request.json['model'], mileage=request.json['mileage'],
-                               general_info=request.json['general_info'], engine_info=request.json['engine_info'], light_info=request.json['light_info'],
-                               wheel_info=request.json['wheel_info'])
-        db.session.add(new_car_info)
-        db.session.commit()
-        return jsonify(new_car_info.to_dict(), 200)
+    if request.method == "POST":
+        request_data = request.json  # Storing request.json in a variable
+        
+        def get_engine_info():
+            login_url = "https://carapi.app/api/auth/login"
+            engine_data_url = "https://carapi.app/api/engines?limit=&sort=make_model_trim_id&direction=asc&verbose=yes"
+
+            # Prepare the request body for authentication
+            login_data = {
+                "api_token": api_token,
+                "api_secret": api_secret
+            }
+
+            # Authenticate and get the JWT token
+            response = requests.post(login_url, json=login_data)
+
+            # Check if the authentication was successful
+            if response.status_code == 200:
+                jwt_token = response.text.strip()  # Extract the JWT token
+                headers = {
+                    "Authorization": f"Bearer {jwt_token}",
+                    "Accept": "application/json"
+                }
+                print(jwt_token)
+                # Make a request to fetch engine data
+                params = {
+                    "make": request_data.get('make'),
+                    "model": request_data.get('model'),
+                    "year": request_data.get('year'),
+                    "id": 1
+                }
+                engine_response = requests.get(engine_data_url, params=params, headers=headers)
+
+                # Check if the request was successful
+                if engine_response.status_code == 200:
+                    engine_data = engine_response.json()
+                    print("Engine data:", engine_data)
+                    return (engine_data['data'])  # Return the fetched engine data
+                else:
+                    print("Failed to fetch engine data:", engine_response.status_code, "-", engine_response.text)
+                    return None  # Return None if failed to fetch engine data
+            else:
+                print("Failed to authenticate:", response.status_code, "-", response.text)
+                return None  # Return None if failed to authenticate
+            
+
+        # Call the get_engine_info function with the extracted parameters
+        engine_info = get_engine_info()
+        print(engine_info)
+        if engine_info is not None:
+            new_car_info = CarInfo(year=request_data.get('year'), make=request_data.get('make'), model=request_data.get('model'), mileage=request_data.get('mileage'),
+                                general_info=request_data.get('general_info'), engine_info=json.dumps(engine_info),
+                                light_info=request_data.get('light_info'),
+                                wheel_info=request_data.get('wheel_info'))
+            
+            db.session.add(new_car_info)
+            db.session.commit()
+            
+            return jsonify(new_car_info.to_dict()), 200
+        else:
+            # Handle the case where engine information retrieval fails
+            return jsonify({"error": "Failed to retrieve engine information"}), 500
+
     return jsonify(car_info.to_dict())
+
 
 @app.route('/api/car_info/<int:car_info_id>', methods=["GET", "POST", "PATCH"])
 def car_info_id(car_info_id):

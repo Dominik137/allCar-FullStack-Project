@@ -18,6 +18,7 @@ openai = "*"
 pipenv = "*"
 install = "*"
 typer = "*"
+requests = "*"
 
 [dev-packages]
 

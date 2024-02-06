@@ -119,7 +119,7 @@ function Garage({ user }) {
         })
         .then(data => {
             console.log("Post successful:", data);
-            return data[0].id
+            return data.id
         })
         .catch(error => {
             console.error('Error:', error);

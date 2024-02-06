@@ -5,6 +5,7 @@ import SignedOutHome from "./signedOutHome";
 import Dashboard from "./Dashboard";
 import Garage from "./Garage";
 import CarPage from "./CarPage";
+import Test from "./test";
 
 function Layout({ user }) {
  return (
@@ -20,6 +21,7 @@ function Layout({ user }) {
             <Route path="/dashboard" element={<Dashboard user={user} />} />
             <Route path="/garage" element={<Garage user={user} />} />
             <Route path='/car-page/:id' element={<CarPage />}/>
+            <Route path='/test' element={<Test />}/>
           </Routes>
         </div>
       </div>
