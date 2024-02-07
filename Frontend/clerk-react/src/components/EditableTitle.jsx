@@ -25,7 +25,7 @@ const EditableTitle = ({ saved_car, onSave }) => {
       setNewTitle(e.target.value);
   };
   return (
-      <div className="relative" key={rerenderKey}>
+      <div className="" key={rerenderKey}>
           {isEditing ? (
               <div>
                   <input
@@ -34,19 +34,31 @@ const EditableTitle = ({ saved_car, onSave }) => {
                       onChange={handleInputChange}
                       className="font-sixty4 text-2xl border border-black px-2"
                   />
-                  <button onClick={handleSaveClick} className="mx-2">
-                      Save
-                  </button>
+                  <span className='border-2 border-black cursor-pointer font-sixty4 underline-offset-0 text-2xl' onClick={handleSaveClick} >
+            Save
+          </span>
               </div>
           ) : (
               <h2
                   onClick={handleEditClick}
-                  className="font-sixty4 text-2xl pencil hover:border border-transparent hover:border-black hover:cursor-pointer relative"
-              >
-                  {newTitle}
-                  <span className="font-sixty4 text-2xl hover:border-black ">
-                      <RiPencilLine />
-                  </span>
+                  className="font-sixty4 text-4xl pencil hover:border border-transparent hover:border-black hover:cursor-pointer relative"
+              ><div className="text-sm ">
+                   <RiPencilLine style={{  }} /></div>
+          {newTitle}
+          <div
+            style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              border: '1px solid transparent',
+              pointerEvents: 'none',
+              transition: 'border 0.3s',
+            }}
+            onMouseOver={(e) => (e.target.style.border = '1px solid #000')}
+            onMouseOut={(e) => (e.target.style.border = '1px solid transparent')}
+          ></div>
               </h2>
           )}
       </div>

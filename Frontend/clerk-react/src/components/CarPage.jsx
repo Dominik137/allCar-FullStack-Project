@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import json5 from 'json5'; // Import the json5 library
+import EditMileage from "./EditMileage";
+import EditableTitle from "./EditableTitle";
+
 function CarPage(){
     const params = useParams();
     const carId = params.id;
@@ -9,12 +12,28 @@ function CarPage(){
     const [car, setCar] = useState(null)
     const [selectedEngineDetails, setSelectedEngineDetails] = useState(null);
     const [selectedBodyDetails, setSelectedBodyDetails] = useState(null)
+    const [selectedWheelDetails, setSelectedWheelDetails] = useState(null)
     const [engineDisplay, setEngineDisplay] = useState(false)
     const [bodyDisplay, setBodyDisplay] = useState(false)
+    const [wheelDisplay, setWheelDisplay] = useState(false)
     const [carType, setCarType] = useState(null)
+    const [savedCarName, setSavedCarName] = useState('');
     
+    const handleNameChange = (event) => {
+      setSavedCarName(event.target.value);
+    };
+
     const handleWheelsClick = async () => {
-        // setSelectedDetails(car.car_info.wheel_info);
+       console.log(car.car_info.wheel_info)
+       const wheelInfo = car.car_info.wheel_info;
+        // console.log(engineInfo)
+        const parsedData = JSON.parse(wheelInfo);
+        console.log(parsedData)
+        setSelectedWheelDetails([parsedData])
+        setWheelDisplay(!wheelDisplay)
+        setEngineDisplay(false)
+        setBodyDisplay(false)
+        
     };
 
     const handleBodyClick = async () => {
@@ -26,6 +45,7 @@ function CarPage(){
         setSelectedBodyDetails(parsedData);
         setBodyDisplay(!bodyDisplay)
         setEngineDisplay(false)
+        setWheelDisplay(false)
     };
 
     const handleEngineClick = async () => {
@@ -38,7 +58,52 @@ function CarPage(){
         setSelectedEngineDetails(parsedData);
         setEngineDisplay(!engineDisplay)
         setBodyDisplay(false)
+        setWheelDisplay(false)
     };
+
+    const handleMileageSave = async (newMileage) => {
+      try {
+        const response = await fetch(`/api/car_info/${car?.car_info.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ mileage: newMileage }),
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to update mileage');
+        }
+    
+        console.log('Mileage updated successfully');
+        // You might want to update the state or perform other actions here if needed.
+      } catch (error) {
+        console.error('Error updating mileage:', error.message);
+      }
+    }
+
+    const handleTitleSave = async (newTitle) => {
+      try {
+        const response = await fetch(`/api/saved_cars/${car.saved_car.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: newTitle }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to update car name');
+        }
+  
+        // Update the saved_car state with the new title
+        setSavedCarName((prevState) => ({ ...prevState, name: newTitle }));
+  
+        console.log('Car name updated successfully');
+      } catch (error) {
+        console.error('Error updating car name:', error.message);
+      }
+   };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -91,7 +156,7 @@ function CarPage(){
                     <h1 className="pt-16 font-newroman text-3xl">Maintence info</h1>
                 </div>
                 <div className="grid place-items-center">
-                    <h1 className="pt-10  font-sixty4 text-5xl">{car.saved_car.name}</h1>
+                    <h1 className="pt-10  font-sixty4 text-5xl">{<EditableTitle saved_car={car.saved_car} onSave={handleTitleSave} />}</h1>
                 </div>
                 <div className="grid place-items-center">
                 <h1 className="pt-16 font-newroman text-3xl">Car Info</h1>
@@ -109,7 +174,7 @@ function CarPage(){
                 
                 <p className="font-newroman text-2xl underline pb-12">{car.car_info.year}: {car.car_info.make} {car.car_info.model}
                 <br></br>
-                Mileage: {car.car_info.mileage}
+                {<EditMileage initialMileage={car.car_info.mileage} onSave={handleMileageSave}  />}
                  </p>
                  
                 
@@ -119,8 +184,33 @@ function CarPage(){
                 <span className="border-2 border-black font-newroman cursor-pointer " onClick={handleEngineClick}> Engine</span>
                 </div>
                 {/* make some type of statement that sorts to what kind of type of car it is a render picture based on it */}
-                <img src="../src/pics/sedan.png"   />
-               
+                {carType.startsWith("Truck") && (
+                  <img src="../src/pics/truck.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+              {carType.startsWith("Sedan") && (
+                  <img src="../src/pics/sedan.png" />
+              )}
+              {carType.startsWith("Hatchback") && (
+                  <img src="../src/pics/hatchback.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+                {carType.startsWith("SUV") && (
+                  <img src="../src/pics/suv.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+               {carType.startsWith("Wagon") && (
+                  <img src="../src/pics/wagon.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+              {carType.startsWith("Coupe") && (
+                  <img src="../src/pics/coupe.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+              {carType.startsWith("Convertible") && (
+                  <img src="../src/pics/convertible.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+              {carType.startsWith("Minivan, Passenger") && (
+                  <img src="../src/pics/minivan.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+              {carType.startsWith("Van, Cargo, Ext, ") && (
+                  <img src="../src/pics/minivan.png" style={{ transform: "scaleX(-1)" }} />
+              )}
             </div>
             <div className="grid place-items-center">
             <div className="text-center border-4 border-black pl-2 pr-2">
@@ -200,7 +290,63 @@ function CarPage(){
   ) : (
     ''
   )}
+  </div>
+  <div className="grid place-items-center">
+  {wheelDisplay ? (
+    <article>
+      <h2 className="font-sixty4 underline">Wheel Details</h2>
+      {selectedWheelDetails && selectedWheelDetails.length > 0? (
+        selectedWheelDetails.map((wheelDetail, index) => (
+          <div key={index}>
+            <h1 className="underline">Tech Dets:</h1>
+            {wheelDetail && wheelDetail.technical ? (
+              <>
+                {wheelDetail.technical.bolt_pattern && <p>Bolt Pattern: {wheelDetail.technical.bolt_pattern}</p>}
+                {wheelDetail.technical.centre_bore && <p>Centre Bore: {wheelDetail.technical.centre_bore}</p>}
+                {wheelDetail.technical.pcd && <p>PCD: {wheelDetail.technical.pcd}</p>}
+                {wheelDetail.technical.rear_axis_centre_bore && <p>Rear Axis Centre Bore: {wheelDetail.technical.rear_axis_centre_bore}</p>}
+                {wheelDetail.technical.rear_axis_pcd && <p>Rear Axis PCD: {wheelDetail.technical.rear_axis_pcd}</p>}
+                {wheelDetail.technical.rear_axis_stud_holes && <p>Rear Axis Stud Holes: {wheelDetail.technical.rear_axis_stud_holes}</p>}
+                {wheelDetail.technical.stud_holes && <p>Stud Holes: {wheelDetail.technical.stud_holes}</p>}
+                {wheelDetail.technical.wheel_fasteners && wheelDetail.technical.wheel_fasteners.thread_size && <p>Thread Size: {wheelDetail.technical.wheel_fasteners.thread_size}</p>}
+                {wheelDetail.technical.wheel_fasteners && wheelDetail.technical.wheel_fasteners.type && <p>Type: {wheelDetail.technical.wheel_fasteners.type}</p>}
+                {wheelDetail.technical.wheel_tightening_torque && <p>Wheel Tightening Torque: {wheelDetail.technical.wheel_tightening_torque}</p>}
+              </>
+            ) : (
+              <p>No wheel info available</p>
+            )}
+            {wheelDetail && wheelDetail.wheels && wheelDetail.wheels.front ? (
+              <div>
+                <h3 className="underline">Front Wheels:</h3>
+                <p>Load Index: {wheelDetail.wheels.front.load_index}</p>
+                <p>Rim: {wheelDetail.wheels.front.rim}</p>
+                <p>Rim Diameter: {wheelDetail.wheels.front.rim_diameter}</p>
+                <p>Rim Offset: {wheelDetail.wheels.front.rim_offset}</p>
+                <p>Rim Width: {wheelDetail.wheels.front.rim_width}</p>
+                <p>Speed Index: {wheelDetail.wheels.front.speed_index}</p>
+                <p>Tire: {wheelDetail.wheels.front.tire}</p>
+                <p>Tire Aspect Ratio: {wheelDetail.wheels.front.tire_aspect_ratio}</p>
+                <p>Tire Construction: {wheelDetail.wheels.front.tire_construction}</p>
+                <p>Tire Diameter: {wheelDetail.wheels.front.tire_diameter || 'N/A'}</p>
+                <p>Tire Pressure: {wheelDetail.wheels.front.tire_pressure.psi} psi / {wheelDetail.wheels.front.tire_pressure.bar} bar</p>
+                <p>Tire Sizing System: {wheelDetail.wheels.front.tire_sizing_system}</p>
+                <p>Tire Width: {wheelDetail.wheels.front.tire_width}</p>
+              </div>
+            ) : (
+              <p>No front wheel info available</p>
+            )}
+          </div>
+        ))
+      ) : (
+        <p>No wheel info available</p>
+      )}
+    </article>
+  ) : (
+    ''
+  )}
+  
 </div>
+
 
         </>
     )

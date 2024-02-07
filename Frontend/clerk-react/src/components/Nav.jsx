@@ -7,6 +7,7 @@ import Home from "./Home";
 
 function Nav({navUser, user}) {
   
+
   return (
     <>
     <div className="flex h-screen  bg-gray-800">
@@ -33,7 +34,7 @@ function Nav({navUser, user}) {
             ) : (
            
               
-              <a href="#" className="text-white hover:text-gray-300 block font-sixty4 border"><SignInButton /></a>
+              <a href="#"  className="text-white hover:text-gray-300 block font-sixty4 border"><SignInButton /></a>
             
           )}
           

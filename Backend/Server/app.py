@@ -20,6 +20,7 @@ from models import *
 
 api_token = os.getenv("CARAPI_API_TOKEN")
 api_secret = os.getenv("CARAPI_API_SECRET")
+wheel_api = os.getenv('WHEELAPI_KEY')
 
 
 @app.route('/')
@@ -48,6 +49,36 @@ def user():
 def car_info():
     if request.method == "POST":
         request_data = request.json  # Storing request.json in a variable
+
+        
+        def get_wheel_info(make, model, year, region, api_key):
+            url = f"https://api.wheel-size.com/v2/search/by_model/?make={make}&model={model}&year={year}&region={region}&user_key={api_key}"
+            response = requests.get(url)
+            
+            
+
+            if response.status_code ==  200:
+                data = response.json()
+                if data["data"] and len(data["data"]) >  0:
+                    first_item = data["data"][0]
+                    trim = first_item["name"].split()[0]
+                    # Extract only the 'front' part of the first wheel object
+                    front_wheel_data = first_item["wheels"][0]["front"] if first_item["wheels"] else None
+                    saved_item = {
+                        "trim": trim,
+                        "technical": first_item["technical"],
+                        "wheels": {"front": front_wheel_data}
+                    }
+                    return saved_item
+                else:
+                    return None
+            else:
+                return None
+
+        wheel_info = get_wheel_info(request_data.get('make'), request_data.get('modelForEng'), request_data.get('year'), "usdm", wheel_api)
+        # print(wheel_info)
+        
+        
         def get_body_info():
             login_url = "https://carapi.app/api/auth/login"
             bodies_url = "https://carapi.app/api/bodies"
@@ -70,7 +101,7 @@ def car_info():
                 }
                 
                 # Make a request to fetch bodies data
-                print(request_data.get('modelForEng'))
+                # print(request_data.get('modelForEng'))
                 params = {
                     "make": request_data.get('make'),
                     "model": request_data.get('modelForEng'),
@@ -83,7 +114,7 @@ def car_info():
                 # Check if the request was successful
                 if bodies_response.status_code == 200:
                     bodies_data = bodies_response.json()
-                    print("Bodies data:", bodies_data['data'])
+                    # print("Bodies data:", bodies_data['data'])
                     return (bodies_data['data'])
                 else:
                     print("Failed to fetch bodies data:", bodies_response.status_code, "-", bodies_response.text)
@@ -112,7 +143,7 @@ def car_info():
                 }
                 # print(jwt_token)
                 # Make a request to fetch engine data
-                print(request_data.get('modelForEng'))
+                # print(request_data.get('modelForEng'))
                 params = {
                     "make": request_data.get('make'),
                     "model": request_data.get('modelForEng'),
@@ -124,7 +155,7 @@ def car_info():
                 # Check if the request was successful
                 if engine_response.status_code == 200:
                     engine_data = engine_response.json()
-                    print("Engine data:", engine_data)
+                    # print("Engine data:", engine_data)
                     return (engine_data['data'])  # Return the fetched engine data
                 else:
                     print("Failed to fetch engine data:", engine_response.status_code, "-", engine_response.text)
@@ -136,12 +167,12 @@ def car_info():
 
         # Call the get_engine_info function with the extracted parameters
         engine_info = get_engine_info()
-        print(engine_info)
+        # print(engine_info)
         if engine_info and body_info is not None:
             new_car_info = CarInfo(year=request_data.get('year'), make=request_data.get('make'), model=request_data.get('model'), mileage=request_data.get('mileage'),
                                 general_info=request_data.get('general_info'), engine_info=json.dumps(engine_info),
                                 body_info=json.dumps(body_info),
-                                wheel_info=request_data.get('wheel_info'))
+                                wheel_info=json.dumps(wheel_info))
             
             db.session.add(new_car_info)
             db.session.commit()

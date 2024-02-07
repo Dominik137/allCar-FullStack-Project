@@ -240,7 +240,7 @@ const handleSavingCar = () => {
         <>
           <div className="garage-page">
             <br></br>
-      <h2 className="text-center text-4xl font-sixty4">My Garage</h2>
+      <h2 className="text-center text-4xl font-sixty4 pb-3">My Garage</h2>
       <div className="grid items-center justify-center">
         {userCars.map((car, index) => (
           <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar}/>
@@ -248,7 +248,7 @@ const handleSavingCar = () => {
       </div>
     </div>
     
-    <div className="grid ">
+    <div className="grid pt-4 justify-center" >
   <details  >
   
     <summary  style={{color: "white" ,textAlign: "center",backgroundColor: 'Black' }}  className="text-center font-newroman" >
