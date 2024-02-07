@@ -238,21 +238,21 @@ const handleSavingCar = () => {
 
     return (
         <>
-          <div className="garage-page">
-            <br></br>
-      <h2 className="text-center text-4xl font-sixty4 pb-3">My Garage</h2>
-      <div className="grid items-center justify-center">
+          <div className="grid">
+            <div className="">
+      <h2 className="text-center text-4xl font-sixty4 pb-3" >My Garage</h2>
+      
         {userCars.map((car, index) => (
           <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar}/>
         ))}
+      
       </div>
-    </div>
     
-    <div className="grid pt-4 justify-center" >
+    <div className="grid pt-2 pl-16 pr-12 justify-center" >
   <details  >
   
-    <summary  style={{color: "white" ,textAlign: "center",backgroundColor: 'Black' }}  className="text-center font-newroman" >
-      <h1 className="font-sixty4 text-white pt-2">Add a Car!</h1>
+    <summary  style={{color: "white" ,textAlign: "center",backgroundColor: 'Black', }}  className="text-center font-sixty4 pt-2 pb-2" >
+      Add A Car!
       </summary>
       
       <form onSubmit={handleGetCar}>
@@ -341,7 +341,7 @@ const handleSavingCar = () => {
       </details>
       
     </div>
-    
+    </div>
 
     
   </>

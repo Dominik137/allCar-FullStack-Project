@@ -92,7 +92,7 @@ function SavedCarCard({ car, setSavedCarName, onDelete }) {
 
  return (
     <div className="grid">
-    <div className="text-center cursor-pointer" >
+    <div className="text-center cursor-pointer ml-4 mr-4 justify-center"  >
     <article style={{ width: 'auto', height: 'auto',  }}>
         <EditableTitle saved_car={saved_car} onSave={handleTitleSave} />
         <br></br>

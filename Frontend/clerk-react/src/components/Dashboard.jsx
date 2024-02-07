@@ -18,18 +18,18 @@ function Dashboard({ user }) {
   return (
     <div>
       <div className="flex flex-row text-center">
-        <div className="basis-1/3">01</div>
+        <div className="basis-1/3">1</div>
         <div className="basis-1/3 pt-8">
           <h1 className="font-sixty4 text-4xl">Welcome back {user.username}!</h1>
         </div>
-        <div className="basis-1/3">
+        <div className="basis-1/3">3
         </div>
       </div>
       <div className="flex flex-row text-center">
         <div className="basis-1/3">
-        <h1 className="text-3xl "> TBD</h1>
+        <h1 className="text-3xl "> Chat GPT!</h1>
         </div>
-        <div className="basis-1/3 pt-32">
+        <div className="basis-1/3 pt-20">
           <h1 className="text-3xl font-newroman">Your Cars</h1>
           {/* Map through the userCars array and render the Car component for each car */}
           {userCars.map((car) => (
@@ -38,9 +38,12 @@ function Dashboard({ user }) {
         </div>
         <div className="basis-1/3">
         <h1 className="text-3xl">Maintenance Reminders</h1>
+        {/* Edit Matience boar */}
+        <div className="max-w-sm mx-auto bg-white shadow-lg  overflow-hidden">
         {userCars.map((car) => (
             <MaintenanceReminders key={car.id} car={car} />
           ))}
+          </div>
         </div>
       </div>
       <div className="flex flex-row text-center">

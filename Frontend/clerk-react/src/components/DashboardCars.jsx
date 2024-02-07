@@ -62,8 +62,11 @@ useEffect(() => {
               {carType.startsWith("Convertible") && (
                   <img src="../src/pics/convertible.png" style={{ transform: "scaleX(-1)" }} />
               )}
-              {carType.startsWith("Minivan, Passenger") && (
-                  <img src="../src/pics/minivan.png" style={{ transform: "scaleX(-1)" }} />
+              {carType.startsWith("Minivan") && (
+                  <img className="pt-4" src="../src/pics/minivan.png" />
+              )}
+              {carType.startsWith("Passanger") && (
+                  <img className="pt-4" src="../src/pics/minivan.png" />
               )}
               {carType.startsWith("Van, Cargo, Ext, ") && (
                   <img src="../src/pics/minivan.png" style={{ transform: "scaleX(-1)" }} />
