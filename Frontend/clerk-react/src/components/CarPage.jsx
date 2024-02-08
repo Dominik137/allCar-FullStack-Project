@@ -131,7 +131,7 @@ function CarPage(){
     }, [carId]);
     
     // Then, you can access carType in your component
-    console.log(carType); // T
+    // console.log(carType); // T
     const formatMaintenanceDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString();
@@ -148,7 +148,7 @@ function CarPage(){
 
     return(
         <>
-            <span className="material-symbols-outlined text-3xl cursor-pointer border-2 border-black " onClick={() => navigate(-1)}>
+            <span className="material-symbols-outlined text-3xl cursor-pointer border-2 border-black hover:bg-green-800 hover:text-white" onClick={() => navigate(-1)}>
                 arrow_back
             </span>
             <div className="grid">
@@ -179,41 +179,46 @@ function CarPage(){
                  
                 
                  <div className=" grid text-center space-x-3s relative " >
-                <span className="border-2 border-black font-newroman cursor-pointer  " onClick={handleWheelsClick}> Wheels</span>
-                <span className="border-2 border-black  font-newroman cursor-pointer " onClick={handleBodyClick}> Body</span>
-                <span className="border-2 border-black font-newroman cursor-pointer " onClick={handleEngineClick}> Engine</span>
+                <span className="border-2 border-black font-newroman cursor-pointer hover:bg-green-800 hover:text-white " onClick={handleWheelsClick}> Wheels</span>
+                <span className="border-2 border-black  font-newroman cursor-pointer hover:bg-green-800 hover:text-white" onClick={handleBodyClick}> Body</span>
+                <span className="border-2 border-black font-newroman cursor-pointer hover:bg-green-800 hover:text-white" onClick={handleEngineClick}> Engine</span>
                 </div>
                 {/* make some type of statement that sorts to what kind of type of car it is a render picture based on it */}
-                {carType.startsWith("Truck") && (
-                  <img src="../src/pics/truck.png" style={{ transform: "scaleX(-1)" }} />
-              )}
-              {carType.startsWith("Sedan") && (
+              
+                {(!carType || carType.trim() === "") && (
                   <img src="../src/pics/sedan.png" />
               )}
-              {carType.startsWith("Hatchback") && (
+              {carType && carType.startsWith("Truck") && (
+                  <img src="../src/pics/truck.png" style={{ transform: "scaleX(-1)" }} />
+              )}
+              {carType && carType.startsWith("Sedan") && (
+                  <img src="../src/pics/sedan.png" />
+              )}
+              {carType && carType.startsWith("Hatchback") && (
                   <img src="../src/pics/hatchback.png" style={{ transform: "scaleX(-1)" }} />
               )}
-                {carType.startsWith("SUV") && (
+              {carType && carType.startsWith("SUV") && (
                   <img src="../src/pics/suv.png" style={{ transform: "scaleX(-1)" }} />
               )}
-               {carType.startsWith("Wagon") && (
+              {carType && carType.startsWith("Wagon") && (
                   <img src="../src/pics/wagon.png" style={{ transform: "scaleX(-1)" }} />
               )}
-              {carType.startsWith("Coupe") && (
+              {carType && carType.startsWith("Coupe") && (
                   <img src="../src/pics/coupe.png" style={{ transform: "scaleX(-1)" }} />
               )}
-              {carType.startsWith("Convertible") && (
+              {carType && carType.startsWith("Convertible") && (
                   <img src="../src/pics/convertible.png" style={{ transform: "scaleX(-1)" }} />
               )}
-              {carType.startsWith("Minivan") && (
+              {carType && carType.startsWith("Minivan") && (
                   <img className="pt-4" src="../src/pics/minivan.png" />
               )}
-              {carType.startsWith("Passanger") && (
+              {carType && carType.startsWith("Passanger") && (
                   <img className="pt-4" src="../src/pics/minivan.png" />
               )}
-              {carType.startsWith("Van, Cargo, Ext, ") && (
+              {carType && carType.startsWith("Van, Cargo, Ext, ") && (
                   <img src="../src/pics/minivan.png" style={{ transform: "scaleX(-1)" }} />
               )}
+
             </div>
             <div className="grid place-items-center">
             <div className="text-center border-4 border-black pl-2 pr-2">
@@ -233,17 +238,17 @@ function CarPage(){
       {selectedEngineDetails && selectedEngineDetails.length > 0 ? (
         selectedEngineDetails.map((engine, index) => (
           <div key={index}>
-            <p>Engine Type: {engine.engine_type}</p>
-            <p>Fuel Type: {engine.fuel_type}</p>
-            <p>Cylinders: {engine.cylinders}</p>
-            <p>Size: {engine.size}</p>
-            <p>Horsepower: {engine.horsepower_hp} HP</p>
-            <p>Torque: {engine.torque_ft_lbs} ft-lbs</p>
-            <p>Valves: {engine.valves}</p>
-            <p>Valve Timing: {engine.valve_timing}</p>
-            <p>Cam Type: {engine.cam_type}</p>
-            <p>Drive Type: {engine.drive_type}</p>
-            <p>Transmission: {engine.transmission}</p>
+           {engine && engine.engine_type && (<p>Engine Type: {engine.engine_type}</p>)}
+            {engine && engine.fuel_type && (<p>Fuel Type: {engine.fuel_type}</p>)}
+            {engine && engine.cylinders && (<p>Cylinders: {engine.cylinders}</p>)}
+            {engine && engine.size && (<p>Size: {engine.size}</p>)}
+            {engine && engine.horsepower_hp && (<p>Horsepower: {engine.horsepower_hp} HP</p>)}
+            {engine && engine.torque_ft_lbs && (<p>Torque: {engine.torque_ft_lbs} ft-lbs</p>)}
+            {engine && engine.valves && (<p>Valves: {engine.valves}</p>)}
+            {engine && engine.valve_timing && (<p>Valve Timing: {engine.valve_timing}</p>)}
+            {engine && engine.cam_type && (<p>Cam Type: {engine.cam_type}</p>)}
+            {engine && engine.drive_type && (<p>Drive Type: {engine.drive_type}</p>)}
+            {engine && engine.transmission && (<p>Transmission: {engine.transmission}</p>)}
           </div>
         ))
       ) : (
@@ -320,7 +325,7 @@ function CarPage(){
             )}
             {wheelDetail && wheelDetail.wheels && wheelDetail.wheels.front ? (
               <div>
-                <h3 className="underline">Front Wheels:</h3>
+                <h3 className="underline">Wheels:</h3>
                 <p>Load Index: {wheelDetail.wheels.front.load_index}</p>
                 <p>Rim: {wheelDetail.wheels.front.rim}</p>
                 <p>Rim Diameter: {wheelDetail.wheels.front.rim_diameter}</p>

@@ -32,16 +32,16 @@ const EditMileage = ({ initialMileage, onSave }) => {
             type="number"
             value={newMileage}
             onChange={handleInputChange}
-            className=" text-2xl border border-black px-2"
+            className=" text-xl rounded-none border border-black px-2"
           />
-          <span className='border-2 border-black cursor-pointer font-sixty4 underline-offset-0 text-2xl' onClick={handleSaveClick} >
+          <span className='border-2 border-black cursor-pointer font-sixty4 underline-offset-0 text-2xl pt-1' onClick={handleSaveClick} >
             Save
           </span>
         </div>
       ) : (
         <p
           onClick={handleEditClick}
-          className=" pencil hover:border border-transparent hover:border-black hover:cursor-pointer relative text-2xl"
+          className=" pencil hover:border border-transparent hover:border-black hover:cursor-pointer relative text-xl"
         >
           <RiPencilLine style={{ marginRight: '5px' }} />
           Mileage: {newMileage}

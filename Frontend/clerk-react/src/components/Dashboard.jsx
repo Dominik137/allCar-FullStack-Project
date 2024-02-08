@@ -25,25 +25,23 @@ function Dashboard({ user }) {
         <div className="basis-1/3">3
         </div>
       </div>
-      <div className="flex flex-row text-center">
-        <div className="basis-1/3">
-        <h1 className="text-3xl "> Chat GPT!</h1>
-        </div>
-        <div className="basis-1/3 pt-20">
-          <h1 className="text-3xl font-newroman">Your Cars</h1>
-          {/* Map through the userCars array and render the Car component for each car */}
-          {userCars.map((car) => (
+      <div className="flex flex-row pl-2  ">
+        <div className="basis-2/3 p-2 pr-48 ">
+        <h1 className="text-3xl pb-2 font-newroman"> Your cars!</h1>
+         {/* Map through the userCars array and render the Car component for each car */}
+         {userCars.map((car) => (
             <DashboardCars key={car.id} car={car} />
+            
           ))}
-        </div>
-        <div className="basis-1/3">
-        <h1 className="text-3xl">Maintenance Reminders</h1>
+        
         {/* Edit Matience boar */}
         <div className="max-w-sm mx-auto bg-white shadow-lg  overflow-hidden">
-        {userCars.map((car) => (
-            <MaintenanceReminders key={car.id} car={car} />
-          ))}
           </div>
+          
+        </div>
+        <div className="basis-1/3">
+        <h1 className="text-3xl">Chat Gpt</h1>
+        
         </div>
       </div>
       <div className="flex flex-row text-center">

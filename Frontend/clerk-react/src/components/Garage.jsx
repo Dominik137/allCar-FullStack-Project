@@ -225,6 +225,15 @@ async function saveToGarage() {
   const savedCar = await response.json();
 
   setUserCars((prevCars) => [...prevCars, savedCar]);
+
+   // Reset form after saving
+   setCar('');
+   setOilDate(null);
+   setTireRotationDate(null);
+   setBrakeFluidChangeDate(null);
+   setOilChangeMileage('');
+   setSavedCarName('');
+   setSavedCarMileage('');
  }
  
 
@@ -237,17 +246,13 @@ const handleSavingCar = () => {
 
 
     return (
-        <>
+        <> <h2 className="text-center text-4xl font-sixty4 pb-3 pt-3" >My Garage</h2>
           <div className="grid">
-            <div className="">
-      <h2 className="text-center text-4xl font-sixty4 pb-3" >My Garage</h2>
-      
+            <div className="grid grid-cols-2 grid-rows-2 gap-4 pl-8 pt-2">
         {userCars.map((car, index) => (
           <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar}/>
-        ))}
-      
-      </div>
-    
+        ))} 
+      </div> 
     <div className="grid pt-2 pl-16 pr-12 justify-center" >
   <details  >
   
@@ -258,24 +263,31 @@ const handleSavingCar = () => {
       <form onSubmit={handleGetCar}>
         {!car ?
         <div className="text-center">
-            <h1>Select A Car!</h1>
+            <h1 className="underline font-newroman text-lg">Select A Car!</h1>
             <label className="text-black" htmlFor="year">Year:</label>
-            <input type="text" name="year" placeholder="Year" />
+            <input className="rounded-none" type="text" name="year" placeholder="Year" />
             <label className="text-black" htmlFor="make">Make:</label>
-            <input type="text" name="make" placeholder="Make" />
+            <input className="rounded-none" type="text" name="make" placeholder="Make" />
             <label className="text-black" htmlFor="model">Model:</label>
-            <input type="text" name="model" placeholder="Model" />
-            <button className="color-black" type="submit">Search</button>
+            <input className="rounded-none" type="text" name="model" placeholder="Model" />
+            <div className="pl-32 pr-32">
+            <button className="border-2 border-black font-newroman cursor-pointer  py-2 rounded-none hover:bg-black hover:text-white" type="submit">Search</button>
+            </div>
             </div>
             : ""}
       </form>
       {car ?
       
-    <div className="text-center">
+    <div className="text-center ">
+      <span className="material-symbols-outlined text-2xl cursor-pointer border-2 border-black hover:bg-green-800 hover:text-white" onClick={()=>setCar('')}>
+                arrow_back
+            </span>
         <form>
-          <h1>
+          <h1 className="pb-3 underline text-xl">
         Input Miantence data!
           </h1>
+          <div class='grid' >
+            <div>
           <label className="text-black" htmlFor="yearSelect">Last Oil service:</label>
       <DatePicker
         id="yearSelect"
@@ -284,8 +296,11 @@ const handleSavingCar = () => {
         showYearDropdown
         dateFormat="MM/dd/yyyy"
         placeholderText="Select a date"
+        className="rounded-none"
       />
-      <label className="text-black" htmlFor="mileageInput">Input Mileage for oil service:</label>
+      </div>
+      <div>
+      <label className="text-black" htmlFor="mileageInput">Mileage for oil service:</label>
       <input
         id="mileageInput"
         placeholder="Input Mileage"
@@ -293,24 +308,34 @@ const handleSavingCar = () => {
         type="number"
         value={oilChangeMileage}
         onChange={handleOilMileageChange}
+        className="rounded-none"
       />
-      <label className="text-black"  htmlFor="tireRotationDatePicker">Tire Rotation Date:</label>
+      </div>
+      </div>
+      <div className="grid">
+        <div>
+      <label className="text-black"  htmlFor="tireRotationDatePicker">Last Tire rotation:</label>
       <DatePicker
         id="tireRotationDatePicker"
         selected={tireRotationDate}
         onChange={(date) => setTireRotationDate(date)}
         dateFormat="MM/dd/yyyy"
         placeholderText="Select a date"
+        className="rounded-none"
       />
-        <label className="text-black" htmlFor="brakeFluidChangeDatePicker">Brake Fluid Change Date:</label>
+      </div>
+      <div>
+        <label className="text-black" htmlFor="brakeFluidChangeDatePicker">Last Brake fluid:</label>
       <DatePicker
         id="brakeFluidChangeDatePicker"
         selected={brakeFluidChangeDate}
         onChange={(date) => setBrakeFluidChangeDate(date)}
         dateFormat="MM/dd/yyyy"
         placeholderText="Select a date"
+        className="rounded-none"
       />
-      
+      </div>
+      </div>
         </form>
         
     </div>
@@ -319,17 +344,16 @@ const handleSavingCar = () => {
     
     
     {car ?
-      <div className="text-center pt-8 ">
-        <h1 className="underline underline-offset-2">Searched Car!</h1>
-        <h2>{car[0]?.year} {car[0]?.make} {car[0]?.model}</h2>
+      <div className="text-center  ">
         
-        <article>city mpg: {car[0]?.city_mpg}, highway mpg: {car[0]?.highway_mpg}, 
-        combined mpg: {car[0]?.combination_mpg}, cylinders: {car[0]?.cylinders}, drive type: {car[0]?.drive}, class: {car[0]?.class} 
-        <label className="underline underline-offset-2" htmlFor="carName">Give your car a name:</label>
-        <input type="text" id="carName" value={savedCarName} onChange={handleNameChange} />
-        <label className="underline underline-offset-2" htmlFor="carMileage">Enter Cars Mileage:</label>
-        <input type="text" id="carMileage" value={savedCarMileage} onChange={handleCarMileage} />
-        <button onClick={handleSavingCar}>Save car to Garage!</button>
+        <article>
+        <h1 className="font-sixty4">Searched Car!</h1>
+        <h2 className="pb-2 pt-2 font-newroman text-2xl underline underline-offset-2 ">{car[0]?.year} {car[0]?.make} {car[0]?.model}</h2>
+        <label className="" htmlFor="carName">Give your car a name:</label>
+        <input className="rounded-none" type="text" id="carName" value={savedCarName} onChange={handleNameChange} />
+        <label className="" htmlFor="carMileage">Enter Cars Mileage:</label>
+        <input className="rounded-none" type="text" id="carMileage" value={savedCarMileage} onChange={handleCarMileage} />
+        <button className="border-2 border-black font-newroman cursor-pointer  py-2 rounded-none  hover:bg-black hover:text-white" onClick={handleSavingCar}>Save Car to Garage!</button>
         </article>
         
         

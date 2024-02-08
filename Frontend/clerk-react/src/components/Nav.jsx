@@ -7,7 +7,7 @@ import Home from "./Home";
 
 function Nav({navUser, user}) {
   
-
+  
   return (
     <>
     <div className="flex h-screen  bg-gray-800">
@@ -27,9 +27,9 @@ function Nav({navUser, user}) {
               <div className="font-sixty4 border">
                 <Link className="text-white hover:text-gray-300 block" to="/garage">Garage</Link>
               </div>
-              <div className="text-white hover:text-gray-300 block font-sixty4 border">
-                < SignOutButton />
-              </div>
+              <div className="text-white hover:text-gray-300 block font-sixty4 border cursor-pointer text-left" >
+              <SignOutButton />
+             </div>
             </>
             ) : (
            

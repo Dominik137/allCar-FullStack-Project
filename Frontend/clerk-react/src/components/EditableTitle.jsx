@@ -32,9 +32,9 @@ const EditableTitle = ({ saved_car, onSave }) => {
                       type="text"
                       value={newTitle}
                       onChange={handleInputChange}
-                      className="font-sixty4 text-2xl border border-black px-2"
+                      className="font-sixty4 text-2xl rounded-none border border-black px-2"
                   />
-                  <span className='border-2 border-black cursor-pointer font-sixty4 underline-offset-0 text-2xl' onClick={handleSaveClick} >
+                  <span className='border-2 border-black cursor-pointer font-sixty4 underline-offset-0 text-2xl pt-1' onClick={handleSaveClick} >
             Save
           </span>
               </div>

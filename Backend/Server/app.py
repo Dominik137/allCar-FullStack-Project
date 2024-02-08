@@ -168,21 +168,19 @@ def car_info():
         # Call the get_engine_info function with the extracted parameters
         engine_info = get_engine_info()
         # print(engine_info)
-        if engine_info and body_info is not None:
-            new_car_info = CarInfo(year=request_data.get('year'), make=request_data.get('make'), model=request_data.get('model'), mileage=request_data.get('mileage'),
+        new_car_info = CarInfo(year=request_data.get('year'), make=request_data.get('make'), model=request_data.get('model'), mileage=request_data.get('mileage'),
                                 general_info=request_data.get('general_info'), engine_info=json.dumps(engine_info),
                                 body_info=json.dumps(body_info),
                                 wheel_info=json.dumps(wheel_info))
             
-            db.session.add(new_car_info)
-            db.session.commit()
+        db.session.add(new_car_info)
+        db.session.commit()
             
-            return jsonify(new_car_info.to_dict()), 200
-        else:
+        return jsonify(new_car_info.to_dict()), 200
+    else:
             # Handle the case where engine information retrieval fails
-            return jsonify({"error": "Failed to retrieve engine information"}), 500
+        return jsonify({"error": "Failed to retrieve engine information"}), 500
 
-    return jsonify(car_info.to_dict())
 
 
 @app.route('/api/car_info/<int:car_info_id>', methods=["GET", "POST", "PATCH"])
