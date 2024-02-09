@@ -105,6 +105,26 @@ function CarPage(){
       }
    };
 
+  //  const handleDelete = async () => {
+  //   alert('Are you sure you want to delete this car from your garage?' )
+  //   try {
+  //      const response = await fetch(`/api/saved_cars/${car.saved_car.id}`, {
+  //        method: 'DELETE',
+  //      });
+   
+  //      if (!response.ok) {
+  //        throw new Error('Failed to delete car');
+  //      }
+  //      onDelete(saved_car.id);
+   
+  //      console.log('Car deleted successfully');
+  //   } catch (error) {
+  //      console.error('Error deleting car:', error.message);
+  //   }
+  //  };
+  // add delete monday!!!
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -156,7 +176,10 @@ function CarPage(){
                     <h1 className="pt-16 font-newroman text-3xl">Maintence info</h1>
                 </div>
                 <div className="grid place-items-center">
-                    <h1 className="pt-10  font-sixty4 text-5xl">{<EditableTitle saved_car={car.saved_car} onSave={handleTitleSave} />}</h1>
+                    <h1 className="pt-10  font-sixty4 text-5xl">{<EditableTitle saved_car={car.saved_car} onSave={handleTitleSave} />} </h1>
+                    
+                {/* <button onClick={handleDelete} className="material-symbols-outlined contrast hover:bg-green-800 hover:text-white" style={{ width: '50px' }}>delete</button> */}
+                {/* delete button */}
                 </div>
                 <div className="grid place-items-center">
                 <h1 className="pt-16 font-newroman text-3xl">Car Info</h1>
@@ -228,6 +251,7 @@ function CarPage(){
                     </p>
                 ))}
                 </div>
+                
             </div>
             </div>
             <div className="grid place-items-center">
