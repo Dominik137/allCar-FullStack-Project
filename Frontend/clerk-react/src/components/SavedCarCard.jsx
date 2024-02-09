@@ -91,7 +91,7 @@ useEffect(()=>{
 
  return (
   <div className="text-center">
-  <div class="border border-black p-4 mb-2 cursor-pointer transition-all ring-0 hover:ring-2 ring-green-800">
+  <div class="border border-black p-2 mb-2 cursor-pointer transition-all ring-0 hover:ring-2 ring-green-800">
     <EditableTitle saved_car={saved_car} onSave={handleTitleSave} />
     <br />
     <div className="grid">

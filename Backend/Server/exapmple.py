@@ -3,8 +3,8 @@ import os
 import typer
 from openai import OpenAI
 
-# os.getenv("OPENAI_KEY")
-client = OpenAI(api_key="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")
+client= os.getenv("OPENAI_KEY")
+
 
 from dotenv import load_dotenv
 from typing import Optional

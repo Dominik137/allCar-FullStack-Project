@@ -254,7 +254,7 @@ const handleSavingCar = () => {
         ))} 
       </div> 
     <div className="grid pt-2 pl-16 pr-12 justify-center" >
-  <details  >
+  <details   >
   
     <summary  style={{color: "white" ,textAlign: "center",backgroundColor: 'Black', }}  className="text-center font-sixty4 pt-2 pb-2" >
       Add A Car!
@@ -353,7 +353,7 @@ const handleSavingCar = () => {
         <input className="rounded-none" type="text" id="carName" value={savedCarName} onChange={handleNameChange} />
         <label className="" htmlFor="carMileage">Enter Cars Mileage:</label>
         <input className="rounded-none" type="text" id="carMileage" value={savedCarMileage} onChange={handleCarMileage} />
-        <button className="border-2 border-black font-newroman cursor-pointer  py-2 rounded-none  hover:bg-black hover:text-white" onClick={handleSavingCar}>Save Car to Garage!</button>
+        <button  className="border-2 border-black font-newroman cursor-pointer  py-2 rounded-none  hover:bg-black hover:text-white" onClick={handleSavingCar}>Save Car to Garage!</button>
         </article>
         
         
