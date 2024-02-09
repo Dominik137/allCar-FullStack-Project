@@ -1,8 +1,11 @@
+import time
 import os
 import typer
 from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv("OPENAI_KEY"))
+# os.getenv("OPENAI_KEY")
+client = OpenAI(api_key="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")
+
 from dotenv import load_dotenv
 from typing import Optional
 
@@ -42,16 +45,21 @@ def interactive_chat(
             typer.echo("ChatGPT: Goodbye!")
             break
 
-        response = client.chat.completions.create(model=model,
-        messages=messages,
-        max_tokens=max_tokens,
-        temperature=temperature)
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            max_tokens=max_tokens,
+            temperature=temperature
+        )
 
-        typer.echo(f'ChatGPT: {response.choices[0].message.content}')
+        chat_text = response.choices[0].message.content
+        typing_delay = 0.05  # Adjust this value for typing speed
+        for char in chat_text:
+            typer.echo(f'ChatGPT: {prompt + char}', nl=False)
+            time.sleep(typing_delay)
+        typer.echo()  # Add a new line after completion of typing
         messages.append(response.choices[0].message)
 
 
 if __name__ == "__main__":
     app()
-
-    # NEED TO BUY CREDITS WILL DO TMR!

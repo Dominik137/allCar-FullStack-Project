@@ -10,6 +10,8 @@ from openai import OpenAI
 import requests
 import json
 import os
+import time
+from dotenv import load_dotenv
 
 # Local imports
 from config import app, db, api
@@ -17,11 +19,11 @@ from models import *
 # Add your model imports
 
 # Views go here!
-
+load_dotenv()
 api_token = os.getenv("CARAPI_API_TOKEN")
 api_secret = os.getenv("CARAPI_API_SECRET")
 wheel_api = os.getenv('WHEELAPI_KEY')
-
+gpt_key= os.getenv("OPENAI_KEY")
 
 @app.route('/')
 def index():
@@ -292,6 +294,52 @@ def get_saved_cars(user_id):
         })
 
     return jsonify({'cars': cars_list}), 200
+
+client = OpenAI(api_key=gpt_key)
+
+def generate_response(prompt, model="gpt-3.5-turbo", max_tokens=150, temperature=0.7):
+    messages = [{"role": "user", "content": prompt}]
+    response = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        max_tokens=max_tokens,
+        temperature=temperature
+    )
+    return response.choices[0].message.content
+
+@app.route('/api/gpt', methods=["POST"])
+def gpt():
+    data = request.json
+    prompt = data.get("prompt")
+
+    if prompt:
+        response_text = generate_response(prompt)
+        # Introduce a delay before sending the response
+        
+        return jsonify({"response": response_text})
+    else:
+        return jsonify({"error": "No prompt provided."}), 400
+
+@app.route('/api/gpt_stream', methods=["POST"])
+def gpt_stream():
+    data = request.json
+    prompt = data.get("prompt")
+
+    if prompt:
+        response_text = generate_response_streaming(prompt)
+        return Response(response_text, content_type='text/plain')
+    else:
+        return jsonify({"error": "No prompt provided."}), 400
+
+def generate_response_streaming(prompt, model="gpt-3.5-turbo", max_tokens=150, temperature=0.7):
+    messages = [{"role": "user", "content": prompt}]
+    response = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        max_tokens=max_tokens,
+        temperature=temperature
+    )
+    return response.choices[0].message.content
 
 
 

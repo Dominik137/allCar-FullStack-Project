@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import DashboardCars from "./DashboardCars";
-import MaintenanceReminders from "./MaintenanceReminders";
+import MaintenanceReminders from "./MaintenanceReminders"
+import GPT from "./GPT";
 
 function Dashboard({ user }) {
   const [userCars, setUserCars] = useState([]);
@@ -40,8 +41,9 @@ function Dashboard({ user }) {
           
         </div>
         <div className="basis-1/3">
-        <h1 className="text-3xl">Chat Gpt</h1>
-        
+        <h1 className="text-3xl pb-2 font-newroman">Chat Gpt</h1>
+        <GPT />
+
         </div>
       </div>
       <div className="flex flex-row text-center">
