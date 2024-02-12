@@ -27,7 +27,7 @@ function Dashboard({ user }) {
         </div>
       </div>
       <div className="flex flex-row pl-2  ">
-        <div className="basis-2/3 p-2 pr-48 ">
+        <div className="basis-2/3 p-2 pr-80 ">
         <h1 className="text-3xl pb-2 font-newroman"> Your cars!</h1>
          {/* Map through the userCars array and render the Car component for each car */}
          {userCars.map((car) => (
@@ -40,7 +40,7 @@ function Dashboard({ user }) {
           </div>
           
         </div>
-        <div className="basis-1/3">
+        <div className="basis-1/3 pr-12 pt-2">
         <h1 className="text-3xl pb-2 font-newroman">Chat Gpt</h1>
         <GPT />
 

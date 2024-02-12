@@ -12,6 +12,7 @@ function Garage({ user }) {
     const [year, setYear] = useState('');
     const [make, setMake] = useState('');
     const [car, setCar] = useState('')
+    const [isLoading, setIsLoading] = useState(false);
 
     const [oilDate, setOilDate] = useState(null);
     const [tireRotationDate, setTireRotationDate] = useState(null);
@@ -58,6 +59,7 @@ function Garage({ user }) {
       const model = event.target.elements.model.value;
     
       setModelForEng(model)
+     
       
       try {
         const response = await fetch(`https://api.api-ninjas.com/v1/cars?make=${make}&year=${year}&limit=1&model=${model}`, {
@@ -77,6 +79,7 @@ function Garage({ user }) {
     
         if (result.length > 0) {
           setCar(result);
+         
         } else {
           // Display an alert if the result is an empty array
           alert('Enter a valid car');
@@ -190,6 +193,7 @@ async function saveCar() {
 }
 
 async function saveToGarage() {
+  setIsLoading(true);
   const savedCarId = await saveCar();
   const userId = user.id; // assuming 'user' has an 'id' property
  
@@ -225,6 +229,7 @@ async function saveToGarage() {
   const savedCar = await response.json();
 
   setUserCars((prevCars) => [...prevCars, savedCar]);
+  setIsLoading(false)
 
    // Reset form after saving
    setCar('');
@@ -248,11 +253,16 @@ const handleSavingCar = () => {
     return (
         <> <h2 className="text-center text-4xl font-sixty4 pb-3 pt-3" >My Garage</h2>
           <div className="grid">
+            
             <div className="grid grid-cols-2 grid-rows-2 gap-4 pl-8 pt-2">
+              
         {userCars.map((car, index) => (
-          <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar}/>
+          <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar} isLoading={isLoading}/>
         ))} 
+         
       </div> 
+      
+           
     <div className="grid pt-2 pl-16 pr-12 justify-center" >
   <details   >
   
@@ -360,7 +370,7 @@ const handleSavingCar = () => {
       </div>
       
       : ''
-      }
+      }{isLoading ? "loading..." : ''}
       
       </details>
       

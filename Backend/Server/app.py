@@ -24,6 +24,7 @@ api_token = os.getenv("CARAPI_API_TOKEN")
 api_secret = os.getenv("CARAPI_API_SECRET")
 wheel_api = os.getenv('WHEELAPI_KEY')
 gpt_key= os.getenv("OPENAI_KEY")
+client = OpenAI(api_key=gpt_key)
 
 @app.route('/')
 def index():
@@ -51,8 +52,21 @@ def user():
 def car_info():
     if request.method == "POST":
         request_data = request.json  # Storing request.json in a variable
+    
+        def generate_summary(make, model, model_type="gpt-3.5-turbo", max_tokens=150, temperature=0.7):
+            prompt = f"Give me a summary of a {make} {model}"
+            messages = [{"role": "user", "content": prompt}]
+            response = client.chat.completions.create(
+                model=model_type,
+                messages=messages,
+                max_tokens=max_tokens,
+                temperature=temperature
+            )
+            return response.choices[0].message.content
 
-        
+        # Assuming `request_data` and `client` are properly defined earlier
+        summary_info = generate_summary(request_data.get('make'), request_data.get('modelForEng'))
+
         def get_wheel_info(make, model, year, region, api_key):
             url = f"https://api.wheel-size.com/v2/search/by_model/?make={make}&model={model}&year={year}&region={region}&user_key={api_key}"
             response = requests.get(url)
@@ -173,7 +187,10 @@ def car_info():
         new_car_info = CarInfo(year=request_data.get('year'), make=request_data.get('make'), model=request_data.get('model'), mileage=request_data.get('mileage'),
                                 general_info=request_data.get('general_info'), engine_info=json.dumps(engine_info),
                                 body_info=json.dumps(body_info),
-                                wheel_info=json.dumps(wheel_info))
+                                wheel_info=json.dumps(wheel_info),
+                                summary=(summary_info))
+                                
+                               
             
         db.session.add(new_car_info)
         db.session.commit()
@@ -295,7 +312,7 @@ def get_saved_cars(user_id):
 
     return jsonify({'cars': cars_list}), 200
 
-client = OpenAI(api_key=gpt_key)
+
 
 def generate_response(prompt, model="gpt-3.5-turbo", max_tokens=150, temperature=0.7):
     messages = [{"role": "user", "content": prompt}]

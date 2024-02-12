@@ -45,7 +45,7 @@ useEffect(() => {
       <p>Year: {car.car_info.year}</p>
       <br></br>
       <p>Mileage: {car.car_info.mileage}</p>
-      {(!carType || carType.trim() === "") && (
+      {carType && carType.startsWith("***") && (
     <img src="../src/pics/sedan.png" style={{ width: '250px', height: 'auto' }} />
 )}
 {carType && carType.startsWith("Truck") && (

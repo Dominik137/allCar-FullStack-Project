@@ -6,7 +6,7 @@ import { RiPencilLine } from 'react-icons/ri';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
-function SavedCarCard({ car, setSavedCarName, onDelete }) {
+function SavedCarCard({ car, setSavedCarName, onDelete, isLoading}) {
  const { saved_car, car_info, maintenance_info } = car;
  const [carType, setCarType] = useState(null)
 
@@ -18,6 +18,7 @@ useEffect(()=>{
  const latestBodyType = parsedData.length > 0 ? parsedData[parsedData.length - 1].type : null;
  setCarType(latestBodyType)
  console.log(carType)
+
 })
  const handleDelete = async () => {
     try {
@@ -90,14 +91,17 @@ useEffect(()=>{
 
 
  return (
-  <div className="text-center">
+  
+  <div className="text-center">   
   <div class="border border-black p-2 mb-2 cursor-pointer transition-all ring-0 hover:ring-2 ring-green-800">
+    <>
     <EditableTitle saved_car={saved_car} onSave={handleTitleSave} />
     <br />
     <div className="grid">
+   
     <p className="font-newroman text-lg">{car_info.year} {car_info.make} {car_info.model}</p>
-    {(!carType || carType.trim() === "") && (
-    <img src="../src/pics/sedan.png" style={{ width: '150px', height: '90px' }} />
+    {carType && carType.startsWith("***") && (
+    <img src="../src/pics/sedan.png" style={{ width: '250px', height: 'auto' }} />
 )}
 {carType && carType.startsWith("Truck") && (
     <img src="../src/pics/truck.png" style={{ width: '150px', height: '90px', transform: "scaleX(-1)" }} />
@@ -155,8 +159,11 @@ useEffect(()=>{
     <button onClick={handleDelete} className="material-symbols-outlined contrast hover:bg-green-800 hover:text-white" style={{ width: '50px' }}>delete</button>
     <button onClick={() => navigate(`/car-page/${car.saved_car.id}`)} className="material-symbols-outlined contrast hover:bg-green-800 hover:text-white" style={{ width: '50px' }}>arrow_forward</button>
     </div>
-  </div>
+</>
 </div>
+            
+         </div> 
+
  );
 
 };

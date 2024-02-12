@@ -1,8 +1,8 @@
-"""added unique email
+"""Create tables
 
-Revision ID: 766434bcbeac
+Revision ID: 82ded77544ac
 Revises: 
-Create Date: 2024-02-01 11:08:20.851248
+Create Date: 2024-02-12 11:56:01.316681
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '766434bcbeac'
+revision = '82ded77544ac'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,7 +26,7 @@ def upgrade():
     sa.Column('mileage', sa.Integer(), nullable=False),
     sa.Column('general_info', sa.String(), nullable=False),
     sa.Column('engine_info', sa.String(), nullable=True),
-    sa.Column('light_info', sa.String(), nullable=True),
+    sa.Column('body_info', sa.String(), nullable=True),
     sa.Column('wheel_info', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_Car_Infos'))
     )
@@ -35,6 +35,7 @@ def upgrade():
     sa.Column('rec_oil_service', sa.String(), nullable=True),
     sa.Column('rec_oil_type', sa.String(), nullable=True),
     sa.Column('inputed_oil_service', sa.String(), nullable=True),
+    sa.Column('mileage_oil_service', sa.Integer(), nullable=True),
     sa.Column('rec_tire_roto', sa.String(), nullable=True),
     sa.Column('inputed_tire_roto', sa.String(), nullable=True),
     sa.Column('rec_tire_psi', sa.String(), nullable=True),

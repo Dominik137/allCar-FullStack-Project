@@ -38,7 +38,7 @@ function GPT() {
                     type="text"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="Enter your prompt"
+                    placeholder="Ask Any Question"
                 />
                 <div className="pl-32 pr-32">
                     <button className="border-2 border-black font-newroman cursor-pointer py-2 rounded-none hover:bg-black hover:text-white" type="submit">Search</button>

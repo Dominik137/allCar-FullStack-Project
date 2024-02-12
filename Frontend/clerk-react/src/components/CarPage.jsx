@@ -13,16 +13,51 @@ function CarPage(){
     const [selectedEngineDetails, setSelectedEngineDetails] = useState(null);
     const [selectedBodyDetails, setSelectedBodyDetails] = useState(null)
     const [selectedWheelDetails, setSelectedWheelDetails] = useState(null)
+    const [selectedMpgDetails, setSelectedMpgDetails] =useState(null)
     const [engineDisplay, setEngineDisplay] = useState(false)
     const [bodyDisplay, setBodyDisplay] = useState(false)
     const [wheelDisplay, setWheelDisplay] = useState(false)
+    const [mpgDisplay, setMpgDisplay] = useState(false)
+    const [maintenanceDisplay, setMaintenanceDisplay] =useState(false)
+    const [summaryDisplay, setSummaryDisplay] =useState(false)
     const [carType, setCarType] = useState(null)
     const [savedCarName, setSavedCarName] = useState('');
-    
+
     const handleNameChange = (event) => {
       setSavedCarName(event.target.value);
     };
 
+    const handleSummaryclick = () =>{
+      setSummaryDisplay(!summaryDisplay)
+      setMaintenanceDisplay(false)
+      setMpgDisplay(false)
+      setEngineDisplay(false)
+      setBodyDisplay(false)
+      setWheelDisplay(false)
+    }
+
+    const handleMaintenanceClick = () =>{
+      console.log(car)
+      setMaintenanceDisplay(!maintenanceDisplay)
+      setMpgDisplay(false)
+      setEngineDisplay(false)
+      setBodyDisplay(false)
+      setWheelDisplay(false)
+      setSummaryDisplay(false)
+    }
+
+    const handleMpgClick = () =>{
+      const mpginfo = car.car_info.general_info
+      const parseddata = JSON.parse(mpginfo)
+      setSelectedMpgDetails([parseddata])
+      setMpgDisplay(!mpgDisplay)
+      setEngineDisplay(false)
+      setBodyDisplay(false)
+      setWheelDisplay(false)
+      setMaintenanceDisplay(false)
+      setSummaryDisplay(false)
+      
+    }
     const handleWheelsClick = async () => {
        console.log(car.car_info.wheel_info)
        const wheelInfo = car.car_info.wheel_info;
@@ -33,6 +68,9 @@ function CarPage(){
         setWheelDisplay(!wheelDisplay)
         setEngineDisplay(false)
         setBodyDisplay(false)
+        setMpgDisplay(false)
+        setMaintenanceDisplay(false)
+        setSummaryDisplay(false)
         
     };
 
@@ -46,6 +84,9 @@ function CarPage(){
         setBodyDisplay(!bodyDisplay)
         setEngineDisplay(false)
         setWheelDisplay(false)
+        setMpgDisplay(false)
+        setMaintenanceDisplay(false)
+        setSummaryDisplay(false)
     };
 
     const handleEngineClick = async () => {
@@ -59,6 +100,9 @@ function CarPage(){
         setEngineDisplay(!engineDisplay)
         setBodyDisplay(false)
         setWheelDisplay(false)
+        setMpgDisplay(false)
+        setMaintenanceDisplay(false)
+        setSummaryDisplay(false)
     };
 
     const handleMileageSave = async (newMileage) => {
@@ -172,28 +216,18 @@ function CarPage(){
                 arrow_back
             </span>
             <div className="grid">
-                <div className="grid place-items-center">
-                    <h1 className="pt-16 font-newroman text-3xl">Maintence info</h1>
-                </div>
+                
                 <div className="grid place-items-center">
                     <h1 className="pt-10  font-sixty4 text-5xl">{<EditableTitle saved_car={car.saved_car} onSave={handleTitleSave} />} </h1>
                     
                 {/* <button onClick={handleDelete} className="material-symbols-outlined contrast hover:bg-green-800 hover:text-white" style={{ width: '50px' }}>delete</button> */}
                 {/* delete button */}
                 </div>
-                <div className="grid place-items-center">
-                <h1 className="pt-16 font-newroman text-3xl">Car Info</h1>
-                </div>
+                
             </div>
             <div className="grid pt-4">
-            <div className="grid place-items-center">
-                <div className="text-center border-4 border-black pl-2 pr-2">
-                <p className="font-newroman text-2xl">Latest oil change: <br></br>{formatMaintenanceDate(car.maintenance_info.inputed_oil_service)}</p>
-                <p className="font-newroman text-2xl">Latest tire rotation: <br></br>{formatMaintenanceDate(car.maintenance_info.inputed_tire_roto)}</p>
-                <p className="font-newroman text-2xl">Latest brake fluid change:  <br></br>{formatMaintenanceDate(car.maintenance_info.inputed_break_fluid_service)}</p>
-                </div>
-            </div>
-            <div className=" place-items-center pt-10 text-center">
+            
+            <div className=" place-items-center pt-10 text-center pl-6 pr-6">
                 
                 <p className="font-newroman text-2xl underline pb-12">{car.car_info.year}: {car.car_info.make} {car.car_info.model}
                 <br></br>
@@ -206,11 +240,16 @@ function CarPage(){
                 <span className="border-2 border-black  font-newroman cursor-pointer hover:bg-green-800 hover:text-white" onClick={handleBodyClick}> Body</span>
                 <span className="border-2 border-black font-newroman cursor-pointer hover:bg-green-800 hover:text-white" onClick={handleEngineClick}> Engine</span>
                 </div>
+                <div className=" grid text-center space-x-3s relative pt-2" >
+                <span className="border-2 border-black font-newroman cursor-pointer hover:bg-green-800 hover:text-white "   onClick={handleMaintenanceClick}> Maintenance</span>
+                <span className="border-2 border-black  font-newroman cursor-pointer hover:bg-green-800 hover:text-white"  onClick={handleMpgClick}> MPG</span>
+                <span className="border-2 border-black font-newroman cursor-pointer hover:bg-green-800 hover:text-white"  onClick={handleSummaryclick}> Summary</span>
+                </div>
                 {/* make some type of statement that sorts to what kind of type of car it is a render picture based on it */}
-              
-                {(!carType || carType.trim() === "") && (
-                  <img src="../src/pics/sedan.png" />
-              )}
+                <div className="flex items-center justify-center">
+                {carType && carType.startsWith("***") && (
+    <img src="../src/pics/sedan.png" />
+)}
               {carType && carType.startsWith("Truck") && (
                   <img src="../src/pics/truck.png" style={{ transform: "scaleX(-1)" }} />
               )}
@@ -241,101 +280,113 @@ function CarPage(){
               {carType && carType.startsWith("Van, Cargo, Ext, ") && (
                   <img src="../src/pics/minivan.png" style={{ transform: "scaleX(-1)" }} />
               )}
+            </div>
+            </div>
 
-            </div>
-            <div className="grid place-items-center">
-            <div className="text-center border-4 border-black pl-2 pr-2">
-                {Object.entries(JSON.parse(car.car_info.general_info)).map(([key, value]) => (
-                    <p className="font-newroman text-2xl" key={key}>
-                    <strong>{key}:</strong> {value}
-                    </p>
-                ))}
-                </div>
-                
-            </div>
-            </div>
-            <div className="grid place-items-center">
+            {/* <div className="pl-20 pr-20 pt-12">  commenting this out a,llow the page to adapt when details are sleected*/}
+              {/* Chat Gpt  */}
             {engineDisplay ? (
   car.car_info.year >= 2015 && car.car_info.year <= 2020 ? (
-    <article>
-        <h2 className="font-sixty4 underline">Engine Details</h2>
+    <div className="pl-20 pr-20 pt-12">
+    <div className="border-4 pl-4 pt-1 pb-1 transition-all border-green-800  mb-4 ">
+        <h2 className="font-sixty4 underline text-xl">Engine Details</h2>
       {selectedEngineDetails && selectedEngineDetails.length > 0 ? (
         selectedEngineDetails.map((engine, index) => (
           <div key={index}>
-           {engine && engine.engine_type && (<p>Engine Type: {engine.engine_type}</p>)}
-            {engine && engine.fuel_type && (<p>Fuel Type: {engine.fuel_type}</p>)}
-            {engine && engine.cylinders && (<p>Cylinders: {engine.cylinders}</p>)}
-            {engine && engine.size && (<p>Size: {engine.size}</p>)}
-            {engine && engine.horsepower_hp && (<p>Horsepower: {engine.horsepower_hp} HP</p>)}
-            {engine && engine.torque_ft_lbs && (<p>Torque: {engine.torque_ft_lbs} ft-lbs</p>)}
-            {engine && engine.valves && (<p>Valves: {engine.valves}</p>)}
-            {engine && engine.valve_timing && (<p>Valve Timing: {engine.valve_timing}</p>)}
-            {engine && engine.cam_type && (<p>Cam Type: {engine.cam_type}</p>)}
-            {engine && engine.drive_type && (<p>Drive Type: {engine.drive_type}</p>)}
-            {engine && engine.transmission && (<p>Transmission: {engine.transmission}</p>)}
+           {engine && engine.engine_type && (<p className="text-lg">Engine Type: {engine.engine_type}</p>)}
+            {engine && engine.fuel_type && (<p className="text-lg">Fuel Type: {engine.fuel_type}</p>)}
+            {engine && engine.cylinders && (<p className="text-lg">Cylinders: {engine.cylinders}</p>)}
+            {engine && engine.size && (<p className="text-lg">Size: {engine.size}</p>)}
+            {engine && engine.horsepower_hp && (<p className="text-lg">Horsepower: {engine.horsepower_hp} HP</p>)}
+            {engine && engine.torque_ft_lbs && (<p className="text-lg">Torque: {engine.torque_ft_lbs} ft-lbs</p>)}
+            {engine && engine.valves && (<p className="text-lg">Valves: {engine.valves}</p>)}
+            {engine && engine.valve_timing && (<p className="text-lg">Valve Timing: {engine.valve_timing}</p>)}
+            {engine && engine.cam_type && (<p className="text-lg">Cam Type: {engine.cam_type}</p>)}
+            {engine && engine.drive_type && (<p className="text-lg">Drive Type: {engine.drive_type}</p>)}
+            {engine && engine.transmission && (<p className="text-lg">Transmission: {engine.transmission}</p>)}
           </div>
+          
         ))
       ) : (
+        <div className="pl-20 pr-20 pt-12">
+        <div className="border-4 pl-4 pt-1 pb-1 transition-all border-green-800  mb-4 ">
         <p>No engine info available</p>
+        </div>
+        </div>
       )}
-    </article>
+    </div></div>
   ) : (
+    <div className="pl-20 pr-20 pt-12">
+    <div className="border-4 pl-4 pt-1 pb-1 transition-all border-green-800  mb-4 ">
     <p>Sorry, only cars between 2015 and 2020 have engine info</p>
+    </div>
+    </div>
   )
 ) : (
   ''
 )}
-</div>
-<div className="grid place-items-center">
+
+
   {bodyDisplay ? (
     car.car_info.year >= 2015 && car.car_info.year <= 2020 ? (
-      <article>
-        <h2 className="font-sixty4 underline">Body Details</h2>
+      <div className="pl-20 pr-20 pt-12">
+      <div className="border-4 pt-1 pb-1 pl-4 transition-all border-green-800  mb-4 ">
+        <h2 className="font-sixty4 underline text-xl">Body Details</h2>
         {selectedBodyDetails && selectedBodyDetails.length > 0 ? (
           selectedBodyDetails.map((bodyDetail, index) => (
             <div key={index}>
-              {bodyDetail.cargo_capacity && <p>Cargo Capacity: {bodyDetail.cargo_capacity}</p>}
-              {bodyDetail.curb_weight && <p>Curb Weight: {bodyDetail.curb_weight}</p>}
-              {bodyDetail.doors && <p>Doors: {bodyDetail.doors}</p>}
-              {bodyDetail.front_track && <p>Front Track: {bodyDetail.front_track}</p>}
-              {bodyDetail.gross_weight && <p>Gross Weight: {bodyDetail.gross_weight}</p>}
-              {bodyDetail.ground_clearance && <p>Ground Clearance: {bodyDetail.ground_clearance}</p>}
-              {bodyDetail.height && <p>Height: {bodyDetail.height}</p>}
-              {bodyDetail.length && <p>Length: {bodyDetail.length}</p>}
-              {bodyDetail.max_cargo_capacity && <p>Max Cargo Capacity: {bodyDetail.max_cargo_capacity}</p>}
-              {bodyDetail.max_payload && <p>Max Payload: {bodyDetail.max_payload}</p>}
-              {bodyDetail.max_towing_capacity && <p>Max Towing Capacity: {bodyDetail.max_towing_capacity}</p>}
-              {bodyDetail.rear_track && <p>Rear Track: {bodyDetail.rear_track}</p>}
-              {bodyDetail.seats && <p>Seats: {bodyDetail.seats}</p>}
-              {bodyDetail.type && <p>Type: {bodyDetail.type}</p>}
-              {bodyDetail.wheel_base && <p>Wheel Base: {bodyDetail.wheel_base}</p>}
-              {bodyDetail.width && <p>Width: {bodyDetail.width}</p>}
+              {bodyDetail.cargo_capacity && <p className="text-lg">Cargo Capacity: {bodyDetail.cargo_capacity}</p>}
+              {bodyDetail.curb_weight && <p className="text-lg">Curb Weight: {bodyDetail.curb_weight}</p>}
+              {bodyDetail.doors && <p className="text-lg">Doors: {bodyDetail.doors}</p>}
+              {bodyDetail.front_track && <p className="text-lg">Front Track: {bodyDetail.front_track}</p>}
+              {bodyDetail.gross_weight && <p className="text-lg">Gross Weight: {bodyDetail.gross_weight}</p>}
+              {bodyDetail.ground_clearance && <p className="text-lg">Ground Clearance: {bodyDetail.ground_clearance}</p>}
+              {bodyDetail.height && <p className="text-lg">Height: {bodyDetail.height}</p>}
+              {bodyDetail.length && <p className="text-lg">Length: {bodyDetail.length}</p>}
+              {bodyDetail.max_cargo_capacity && <p className="text-lg">Max Cargo Capacity: {bodyDetail.max_cargo_capacity}</p>}
+              {bodyDetail.max_payload && <p className="text-lg">Max Payload: {bodyDetail.max_payload}</p>}
+              {bodyDetail.max_towing_capacity && <p className="text-lg">Max Towing Capacity: {bodyDetail.max_towing_capacity}</p>}
+              {bodyDetail.rear_track && <p className="text-lg">Rear Track: {bodyDetail.rear_track}</p>}
+              {bodyDetail.seats && <p className="text-lg">Seats: {bodyDetail.seats}</p>}
+              {bodyDetail.type && <p className="text-lg">Type: {bodyDetail.type}</p>}
+              {bodyDetail.wheel_base && <p className="text-lg">Wheel Base: {bodyDetail.wheel_base}</p>}
+              {bodyDetail.width && <p className="text-lg">Width: {bodyDetail.width}</p>}
             </div>
           ))
         ) : (
+          <div className="pl-20 pr-20 pt-12">
+          <div className="border-4 pl-4 pt-1 pb-1 transition-all border-green-800  mb-4 ">
           <p>No body info available</p>
+          </div>
+          </div>
         )}
-      </article>
+        </div>
+      </div>
     ) : (
+      <div className="pl-20 pr-20 pt-12">
+      <div className="border-4 pl-4 pt-1 pb-1 transition-all border-green-800  mb-4 ">
       <p>Sorry, only cars between 2015 and 2020 have body info</p>
+      </div>
+      </div>
     )
   ) : (
     ''
   )}
-  </div>
-  <div className="grid place-items-center">
+  
+  
   {wheelDisplay ? (
-    <article>
-      <h2 className="font-sixty4 underline">Wheel Details</h2>
+    <div className="pl-20 pr-20 pt-12">
+          <div className="border-4 pt-1 pb-1 pl-4 transition-all border-green-800  mb-4 ">
+      <h2 className="font-sixty4 underline text-xl">Wheel Details</h2>
       {selectedWheelDetails && selectedWheelDetails.length > 0? (
         selectedWheelDetails.map((wheelDetail, index) => (
           <div key={index}>
-            <h1 className="underline">Tech Dets:</h1>
+            <h1 className="underline text-lg bold ">Tech Dets:</h1>
             {wheelDetail && wheelDetail.technical ? (
               <>
                 {wheelDetail.technical.bolt_pattern && <p>Bolt Pattern: {wheelDetail.technical.bolt_pattern}</p>}
                 {wheelDetail.technical.centre_bore && <p>Centre Bore: {wheelDetail.technical.centre_bore}</p>}
-                {wheelDetail.technical.pcd && <p>PCD: {wheelDetail.technical.pcd}</p>}
+                {wheelDetail.technical.pcd && <p >PCD: {wheelDetail.technical.pcd}</p>}
                 {wheelDetail.technical.rear_axis_centre_bore && <p>Rear Axis Centre Bore: {wheelDetail.technical.rear_axis_centre_bore}</p>}
                 {wheelDetail.technical.rear_axis_pcd && <p>Rear Axis PCD: {wheelDetail.technical.rear_axis_pcd}</p>}
                 {wheelDetail.technical.rear_axis_stud_holes && <p>Rear Axis Stud Holes: {wheelDetail.technical.rear_axis_stud_holes}</p>}
@@ -348,8 +399,8 @@ function CarPage(){
               <p>No wheel info available</p>
             )}
             {wheelDetail && wheelDetail.wheels && wheelDetail.wheels.front ? (
-              <div>
-                <h3 className="underline">Wheels:</h3>
+             <>
+                <h1 className="underline bold text-lg">Wheels:</h1>
                 <p>Load Index: {wheelDetail.wheels.front.load_index}</p>
                 <p>Rim: {wheelDetail.wheels.front.rim}</p>
                 <p>Rim Diameter: {wheelDetail.wheels.front.rim_diameter}</p>
@@ -363,7 +414,7 @@ function CarPage(){
                 <p>Tire Pressure: {wheelDetail.wheels.front.tire_pressure.psi} psi / {wheelDetail.wheels.front.tire_pressure.bar} bar</p>
                 <p>Tire Sizing System: {wheelDetail.wheels.front.tire_sizing_system}</p>
                 <p>Tire Width: {wheelDetail.wheels.front.tire_width}</p>
-              </div>
+            </>
             ) : (
               <p>No front wheel info available</p>
             )}
@@ -372,11 +423,67 @@ function CarPage(){
       ) : (
         <p>No wheel info available</p>
       )}
-    </article>
+      </div>
+    </div>
   ) : (
     ''
   )}
-  
+{mpgDisplay ? 
+  (<div className="pl-20 pr-20 pt-12">
+  <div className="border-4 pt-1 pb-1 pl-4 transition-all border-green-800  mb-4 ">
+    <h2 className="font-sixty4 underline text-xl">MPG Details</h2>
+    {selectedMpgDetails && selectedMpgDetails.length > 0 ? (
+      selectedMpgDetails.map((mpgDetail, index) => (
+        
+        <div key={index}>
+          <>
+            {mpgDetail.city_mpg && <p className="text-lg">City MPG: {mpgDetail.city_mpg}</p>}
+            {mpgDetail.highway_mpg && <p className="text-lg">Highway MPG: {mpgDetail.highway_mpg}</p>}
+            {mpgDetail.combination_mpg && <p className="text-lg">Combined MPG: {mpgDetail.combination_mpg}</p>}
+          </>
+        </div>
+      ))
+    ) : (
+      <p>No MPG details</p>
+    )}
+  </div>
+  </div>
+  ):''}
+   
+
+   
+   {maintenanceDisplay ? (
+  car.maintenance_info ? (
+    <div className="pl-20 pr-20 pt-12">
+      <div className="border-4 pt-1 pb-1 pl-4 transition-all border-green-800  mb-4 ">
+        <h2 className="font-sixty4 underline text-xl">Maintenance Details</h2>
+        <p className="font-newroman text-2xl">Latest oil change: {formatMaintenanceDate(car.maintenance_info.inputed_oil_service)}</p>
+        <p className="font-newroman text-2xl">Latest tire rotation: {formatMaintenanceDate(car.maintenance_info.inputed_tire_roto)}</p>
+        <p className="font-newroman text-2xl">Latest brake fluid change: {formatMaintenanceDate(car.maintenance_info.inputed_break_fluid_service)}</p>
+      </div>
+    </div>
+  ) : (
+    <p>No Maintenance Info</p>
+  )
+) : ""}
+
+{summaryDisplay ? (
+  car.car_info.summary ?(
+    <div className="pl-20 pr-20 pt-12">
+      <div className="border-4 pt-1 pb-1 pl-4 transition-all border-green-800  mb-4 ">
+      <h2 className="font-sixty4 underline text-xl"> Summary</h2>
+      { <p className="font-newroman text-xl">{car.car_info.summary}</p>}
+        </div>
+        </div>
+       ) : (
+   <p>No Summary</p>)
+): ""}
+
+
+</div>
+
+{/* </div>  commented out so screen is adaptive*/}
+<div className="grid place-items-center">              
 </div>
 
 

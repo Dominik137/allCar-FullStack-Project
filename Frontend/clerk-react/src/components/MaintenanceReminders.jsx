@@ -24,7 +24,7 @@ return (
        <br></br>
         <p className="text-gray-700" >{formattedDate}</p>
         <br></br>
-        <p className="text-lg font-newroman mb-2">You are {<p style={color}>{milesRemainingUntilOilChange}</p>} miles away from the next oil change.</p>
+        <p className="text-lg font-newroman mb-2">You are {<p style={color}>{milesRemainingUntilOilChange}</p> } miles away from the next oil change.</p>
     </>
   );
 }
