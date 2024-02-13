@@ -41,9 +41,9 @@ useEffect(() => {
         <div>
         <h1 className="font-sixty4">{car.saved_car.name}</h1>
         <h2 className="text-xl font-newroman pt-2">{car.car_info.make}: {car.car_info.model}</h2>
-      <br></br>
+      
       <p>Year: {car.car_info.year}</p>
-      <br></br>
+    
       <p>Mileage: {car.car_info.mileage}</p>
       {carType && carType.startsWith("***") && (
     <img src="../src/pics/sedan.png" style={{ width: '250px', height: 'auto' }} />
@@ -81,7 +81,7 @@ useEffect(() => {
         </div>
         <div>
         
-      <h1 className="text-sm font-sixty4">Maintenance Reminders 🔧</h1>
+      <h1 className="text-sm font-sixty4">Maintenance Reminders</h1>
         <MaintenanceReminders key={car.id} car={car} />
         
       </div>

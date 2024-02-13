@@ -19,12 +19,13 @@ let color = {}; // Initialize color object
 
 return (
     <>
- 
+{/*  
         <h1 className="font-newroman text-lg pt-2">The Last Oil Service was:</h1>
        <br></br>
-        <p className="text-gray-700" >{formattedDate}</p>
+        <p className="text-gray-700" >{formattedDate}</p> */}
         <br></br>
-        <p className="text-lg font-newroman mb-2">You are {<p style={color}>{milesRemainingUntilOilChange}</p> } miles away from the next oil change.</p>
+
+        <p className="text-lg font-newroman mb-2">{<p style={color}>{milesRemainingUntilOilChange} Miles</p> } until your next oil change.</p>
     </>
   );
 }

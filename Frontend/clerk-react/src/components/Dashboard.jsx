@@ -4,6 +4,7 @@ import Nav from "./Nav";
 import DashboardCars from "./DashboardCars";
 import MaintenanceReminders from "./MaintenanceReminders"
 import GPT from "./GPT";
+import GoogleMaps from "./GoogleMaps";
 
 function Dashboard({ user }) {
   const [userCars, setUserCars] = useState([]);
@@ -27,7 +28,7 @@ function Dashboard({ user }) {
         </div>
       </div>
       <div className="flex flex-row pl-2  ">
-        <div className="basis-2/3 p-2 pr-80 ">
+        <div className="basis-2/3 p-2 pr-60 ">
         <h1 className="text-3xl pb-2 font-newroman"> Your cars!</h1>
          {/* Map through the userCars array and render the Car component for each car */}
          {userCars.map((car) => (
@@ -41,9 +42,14 @@ function Dashboard({ user }) {
           
         </div>
         <div className="basis-1/3 pr-12 pt-2">
+          <div>
         <h1 className="text-3xl pb-2 font-newroman">Chat Gpt</h1>
         <GPT />
+          </div>
+          <div className="pt-8">
 
+            <GoogleMaps />
+          </div>
         </div>
       </div>
       <div className="flex flex-row text-center">

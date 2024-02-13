@@ -260,10 +260,17 @@ const handleSavingCar = () => {
           <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar} isLoading={isLoading}/>
         ))} 
          
-      </div> 
+      </div > 
+      {isLoading ? 
+      <div class="border border-black p-2 mb-2 cursor-pointer transition-all ring-0 hover:ring-2 ring-green-800">
+      <p>Loading...</p>
+
+      </div>
       
+      : ''}
            
     <div className="grid pt-2 pl-16 pr-12 justify-center" >
+    
   <details   >
   
     <summary  style={{color: "white" ,textAlign: "center",backgroundColor: 'Black', }}  className="text-center font-sixty4 pt-2 pb-2" >
@@ -370,7 +377,7 @@ const handleSavingCar = () => {
       </div>
       
       : ''
-      }{isLoading ? "loading..." : ''}
+      }
       
       </details>
       

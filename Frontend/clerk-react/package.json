@@ -11,12 +11,14 @@
     },
     "dependencies": {
         "@clerk/clerk-react": "^4.30.3",
+        "@vis.gl/react-google-maps": "^0.6.1",
         "json": "^11.0.0",
         "json5": "^2.2.3",
         "react": "^18.2.0",
         "react-datepicker": "^6.0.0",
         "react-dom": "^18.2.0",
         "react-icons": "^5.0.1",
+        "react-router-dom": "^6.22.0",
         "react-type-animation": "^3.2.0"
     },
     "devDependencies": {
