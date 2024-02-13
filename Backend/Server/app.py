@@ -25,10 +25,29 @@ api_secret = os.getenv("CARAPI_API_SECRET")
 wheel_api = os.getenv('WHEELAPI_KEY')
 gpt_key= os.getenv("OPENAI_KEY")
 client = OpenAI(api_key=gpt_key)
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 @app.route('/')
 def index():
     pass
+
+@app.route('/api/nearbyMechanics', methods=['GET'])
+def get_nearby_mechanics():
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    radius = 5000  # 5000 meters (5 kilometers)
+
+    try:
+        response = requests.get(
+            f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius={radius}&type=car_repair&keyword=mechanic&key={GOOGLE_API_KEY}'
+        )
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        print("Error fetching nearby mechanics:", e)
+        return jsonify(error='Internal Server Error'), 500
+    
+
 @app.route('/api/users', methods=["GET", "POST"])
 def user():
 

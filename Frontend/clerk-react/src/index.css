@@ -21,6 +21,14 @@
     'opsz' 48;
 }
 
+.custom-marker {
+  /* Set outline to none to remove the blue box */
+  outline: none;
+}
+.googleMaps {
+  /* Your custom styles here */
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

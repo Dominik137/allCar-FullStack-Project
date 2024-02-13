@@ -19,13 +19,12 @@ function Dashboard({ user }) {
 
   return (
     <div>
-      <div className="flex flex-row text-center">
-        <div className="basis-1/3">1</div>
-        <div className="basis-1/3 pt-8">
+      <div className="grid text-center">
+       
+        <div className=" pt-8 text-center pb-3">
           <h1 className="font-sixty4 text-4xl">Welcome back {user.username}!</h1>
         </div>
-        <div className="basis-1/3">3
-        </div>
+       
       </div>
       <div className="flex flex-row pl-2  ">
         <div className="basis-2/3 p-2 pr-60 ">
@@ -46,7 +45,7 @@ function Dashboard({ user }) {
         <h1 className="text-3xl pb-2 font-newroman">Chat Gpt</h1>
         <GPT />
           </div>
-          <div className="pt-8">
+          <div className="pt-8 pb-32">
 
             <GoogleMaps />
           </div>
