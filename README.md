@@ -1,5 +1,4 @@
-# AllCar🚗 
-## Full Stack Web Application
+# AllCar🚗 - Full Stack Web Application
 
 ## Introduction
 AllCar is a full-stack web application designed to provide users with a centralized platform for managing their vehicles, getting information about their vehicles and locating nearby mechanics. Built with React, Tailwind CSS, Python, Flask, and SQLAlchemy, AllCar offers a seamless user experience that combines the power of modern frontend frameworks with the robustness of a backend built on Flask.
@@ -41,13 +40,13 @@ python app.py
 # This will launch the backend server and then you're good to go!
 ```
 ## Usage
-After setting up the application, you can:
-Register or sign in to your account.
-Add cars to your garage with detailed specifications.
-Use the chatbot to get information about your cars.
-Generate summaries of your cars.
-Find nearby mechanics using the Google Maps integration.
+# After setting up the application, you can:
+# Register or sign in to your account.
+# Add cars to your garage with detailed specifications.
+# Use the chatbot to get information about your cars.
+# Generate summaries of your cars.
+# Find nearby mechanics using the Google Maps integration.
 
 ## Creator:
-Dominik Arment
-Linked in: https://www.linkedin.com/in/dominik-arment-579a39265/
+# Dominik Arment
+# Linked in: https://www.linkedin.com/in/dominik-arment-579a39265/
