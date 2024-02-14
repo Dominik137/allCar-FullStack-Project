@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   APIProvider,
   Map,
@@ -16,6 +16,7 @@ export default function GoogleMaps() {
   const [selectedMechanic, setSelectedMechanic] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(12); // Initial zoom level
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+
 
   useEffect(() => {
     if (navigator.geolocation) {

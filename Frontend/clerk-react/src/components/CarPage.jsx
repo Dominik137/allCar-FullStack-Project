@@ -149,23 +149,25 @@ function CarPage(){
       }
    };
 
-  //  const handleDelete = async () => {
-  //   alert('Are you sure you want to delete this car from your garage?' )
-  //   try {
-  //      const response = await fetch(`/api/saved_cars/${car.saved_car.id}`, {
-  //        method: 'DELETE',
-  //      });
+   const handleDelete = async () => {
+    alert('Are you sure you want to delete this car from your garage?' )
+    try {
+       const response = await fetch(`/api/saved_cars/${car.saved_car.id}`, {
+         method: 'DELETE',
+       });
    
-  //      if (!response.ok) {
-  //        throw new Error('Failed to delete car');
-  //      }
-  //      onDelete(saved_car.id);
-   
-  //      console.log('Car deleted successfully');
-  //   } catch (error) {
-  //      console.error('Error deleting car:', error.message);
-  //   }
-  //  };
+       if (!response.ok) {
+         throw new Error('Failed to delete car');
+       }
+       onDelete(saved_car.id);
+       
+       console.log('Car deleted successfully');
+       
+    } catch (error) {
+       console.error('Error deleting car:', error.message);
+    }
+    navigate(-1)
+   };
   // add delete monday!!!
 
 
@@ -212,15 +214,20 @@ function CarPage(){
 
     return(
         <>
-            <span className="material-symbols-outlined text-3xl cursor-pointer border-2 border-black hover:bg-green-800 hover:text-white" onClick={() => navigate(-1)}>
-                arrow_back
-            </span>
+        <div className="relative">
+  <span className="material-symbols-outlined text-3xl cursor-pointer border-2 border-black hover:bg-green-800 hover:text-white" onClick={() => navigate(-1)}>
+    arrow_back
+  </span>
+  <span onClick={handleDelete} className="absolute top-0 right-0 material-symbols-outlined text-3xl cursor-pointer border-2 border-black contrast hover:bg-green-800 hover:text-white" style={{ width: '50px' }}>
+    delete
+  </span>
+</div>
             <div className="grid">
                 
                 <div className="grid place-items-center">
                     <h1 className="pt-10  font-sixty4 text-5xl">{<EditableTitle saved_car={car.saved_car} onSave={handleTitleSave} />} </h1>
                     
-                {/* <button onClick={handleDelete} className="material-symbols-outlined contrast hover:bg-green-800 hover:text-white" style={{ width: '50px' }}>delete</button> */}
+                
                 {/* delete button */}
                 </div>
                 
