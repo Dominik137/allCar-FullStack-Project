@@ -50,3 +50,9 @@ python app.py
 ## Creator:
 - Dominik Arment
 - Linked in: https://www.linkedin.com/in/dominik-arment-579a39265/
+
+![dashboard](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/e0eac609-47ed-4888-9545-e9b3b134d2e9)
+
+![Garage](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/aacaa05c-d72a-4c83-9acd-3cf717f1174a)
+
+![CarPage](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/296f9443-b8cd-4114-8131-1b7da2478a1a)
