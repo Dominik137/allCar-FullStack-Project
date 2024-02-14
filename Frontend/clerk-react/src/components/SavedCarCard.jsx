@@ -94,6 +94,7 @@ useEffect(()=>{
   
   <div className="text-center">   
   <div class="border border-black p-2 mb-2 cursor-pointer transition-all ring-0 hover:ring-2 ring-green-800">
+  
     <>
     <EditableTitle saved_car={saved_car} onSave={handleTitleSave} />
     <br />
@@ -160,8 +161,9 @@ useEffect(()=>{
     <button onClick={() => navigate(`/car-page/${car.saved_car.id}`)} className="material-symbols-outlined contrast hover:bg-green-800 hover:text-white" style={{ width: '50px' }}>arrow_forward</button>
     </div>
 </>
+
 </div>
-            
+
          </div> 
 
  );

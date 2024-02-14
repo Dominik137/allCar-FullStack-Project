@@ -251,7 +251,9 @@ const handleSavingCar = () => {
 
 
     return (
-        <> <h2 className="text-center text-4xl font-sixty4 pb-3 pt-3" >My Garage</h2>
+        <> 
+           
+        <h2 className="text-center text-4xl font-sixty4 pb-3 pt-3" >My Garage</h2>
           <div className="grid">
             
             <div className="grid grid-cols-2 grid-rows-2 gap-4 pl-8 pt-2">
@@ -261,16 +263,9 @@ const handleSavingCar = () => {
         ))} 
          
       </div > 
-      {isLoading ? 
-      <div class="border border-black p-2 mb-2 cursor-pointer transition-all ring-0 hover:ring-2 ring-green-800">
-      <p>Loading...</p>
-
-      </div>
-      
-      : ''}
-           
-    <div className="grid pt-2 pl-16 pr-12 justify-center" >
-    
+     
+    <div className="grid grid-rows-2 pt-2 pl-16 pr-12 justify-center" >
+    <div>
   <details   >
   
     <summary  style={{color: "white" ,textAlign: "center",backgroundColor: 'Black', }}  className="text-center font-sixty4 pt-2 pb-2" >
@@ -380,9 +375,16 @@ const handleSavingCar = () => {
       }
       
       </details>
-      
+      <div className="text-center">
+      {isLoading ? 
+    <p>Loading...</p>
+    : ""}
+      </div>
+      </div>
+     
     </div>
-    </div>
+    
+    </div> 
 
     
   </>
