@@ -4,17 +4,19 @@
 AllCar is a full-stack web application designed to provide users with a centralized platform for managing their vehicles, getting information about their vehicles and locating nearby mechanics. Built with React, Tailwind CSS, Python, Flask, and SQLAlchemy, AllCar offers a seamless user experience that combines the power of modern frontend frameworks with the robustness of a backend built on Flask.
 
 ## Features
-User Accounts: Users can create accounts to securely store and manage their vehicle information.
-Vehicle Inventory Management: Owners can add their cars to the garage, complete with detailed specifications including wheel, engine, and body information.
-Integrated GPT Chatbot: Ask questions about your cars and get instant answers with the built-in GPT-powered chatbot.
-Summary Generation: Summary of a specific make and model are generated through GPT when adding a car.
-Google Maps Integration: Use the integrated Google Maps feature to find nearby mechanics.
+- User Accounts: Users can create accounts to securely store and manage their vehicle information.
+- Vehicle Management: Owners can add their cars to the garage, complete with detailed specifications including wheel, engine, and body information.
+- All this Information Is coming from multiple APIs, Such as the CarApi and Wheel-Siaze Api.
+- Users Can add maintenance info about their vehicles and this will be stored and will display reminders on when recommended maintenance is due.
+- Integrated GPT Chatbot: Ask questions about your cars and get instant answers with the built-in GPT-powered chatbot.
+- Summary Generation: Summary of a specific make and model are generated through GPT when adding a car.
+- Google Maps Integration: Use the integrated Google Maps feature to find nearby mechanics.
 
 ## Getting Started
 To get started with AllCar, follow these steps:
 
-Clone the repository to your local machine.
-Open it in your code editor and make two terminal windows.
+- Clone the repository to your local machine.
+- Open it in your code editor and make two terminal windows.
 
 ## Front End:
 ```bash
