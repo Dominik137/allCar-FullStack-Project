@@ -53,6 +53,7 @@ python app.py
 
 ![dashboard](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/e0eac609-47ed-4888-9545-e9b3b134d2e9)
 
-![Garage](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/aacaa05c-d72a-4c83-9acd-3cf717f1174a)
+![Garage](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/27100342-492b-463c-b984-5e29d889e756)
 
-![CarPage](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/296f9443-b8cd-4114-8131-1b7da2478a1a)
+![Carpage](https://github.com/Dominik137/allCar-FullStack-Project/assets/142343877/c9121487-19c4-40ae-92b0-7989374df646)
+
