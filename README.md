@@ -40,13 +40,13 @@ python app.py
 # This will launch the backend server and then you're good to go!
 ```
 ## Usage
-# After setting up the application, you can:
-# Register or sign in to your account.
-# Add cars to your garage with detailed specifications.
-# Use the chatbot to get information about your cars.
-# Generate summaries of your cars.
-# Find nearby mechanics using the Google Maps integration.
+- After setting up the application, you can:
+- Register or sign in to your account.
+- Add cars to your garage with detailed specifications.
+- Use the chatbot to get information about your cars.
+- Generate summaries of your cars.
+- Find nearby mechanics using the Google Maps integration.
 
 ## Creator:
-# Dominik Arment
-# Linked in: https://www.linkedin.com/in/dominik-arment-579a39265/
+- Dominik Arment
+- Linked in: https://www.linkedin.com/in/dominik-arment-579a39265/
