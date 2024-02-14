@@ -1,7 +1,9 @@
 # AllCar🚗 - Full Stack Web Application
 
 ## Introduction
-AllCar is a full-stack web application designed to provide users with a centralized platform for managing their vehicles, getting information about their vehicles and locating nearby mechanics. Built with React, Tailwind CSS, Python, Flask, and SQLAlchemy, AllCar offers a seamless user experience that combines the power of modern frontend frameworks with the robustness of a backend built on Flask.
+- AllCar is a full-stack web application that was built by me in 3 weeks during my Bootcamp at Flatiron School.
+- Designed to provide users with a centralized platform for managing their vehicles, getting information about their vehicles, and locating nearby mechanics.
+-  Built with React, Tailwind CSS, Python, Flask, and SQLAlchemy, AllCar offers a seamless user experience that combines the power of modern frontend frameworks with the robustness of a backend built on Flask.
 
 ## Features
 - User Accounts: Users can create accounts to securely store and manage their vehicle information.
