@@ -255,16 +255,16 @@ const handleSavingCar = () => {
            
         <h2 className="text-center text-4xl font-sixty4 pb-3 pt-3" >My Garage</h2>
           <div className="grid">
-            
-            <div className="grid grid-cols-2 grid-rows-2 gap-4 pl-8 pt-2">
+          <div id="left" className="flex flex-col">
+            <div id="left side" className="grid grid-cols-2 grid-rows-2 gap-4 pl-8 pt-2">
               
         {userCars.map((car, index) => (
           <SavedCarCard key={index} setSavedCarName={setSavedCarName} car={car}   onDelete={handleDeleteCar} isLoading={isLoading}/>
         ))} 
-         
+          </div>
       </div > 
      
-    <div className="grid grid-rows-2 pt-2 pl-16 pr-12 justify-center" >
+    <div id="right" className="grid grid-rows-2 pt-2 pl-16 pr-12 justify-center" >
     <div>
   <details   >
   
@@ -377,7 +377,7 @@ const handleSavingCar = () => {
       </details>
       <div className="text-center">
       {isLoading ? 
-    <p>Loading...</p>
+    <h1 className="font-sixty4 text-2xl">Loading...</h1>
     : ""}
       </div>
       </div>

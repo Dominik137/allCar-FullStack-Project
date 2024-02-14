@@ -22,7 +22,7 @@ function Nav({navUser, user}) {
             
               <div className="font-sixty4">
                 {/* trying to figure ouat clean boarder */}
-                <Link className="text-white hover:text-gray-300 block border" to="/dashboard">Home</Link>
+                <Link className="text-white hover:text-gray-300 block border" to="/">Home</Link>
                 </div>
               <div className="font-sixty4 border">
                 <Link className="text-white hover:text-gray-300 block" to="/garage">Garage</Link>

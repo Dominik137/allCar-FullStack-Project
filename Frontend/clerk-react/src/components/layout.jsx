@@ -18,7 +18,7 @@ function Layout({ user }) {
         <div className="flex-grow overflow-auto">
           <Routes>
             <Route path="/signedOutHome" element={<SignedOutHome />} />
-            <Route path="/dashboard" element={<Dashboard user={user} />} />
+            <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/garage" element={<Garage user={user} />} />
             <Route path='/car-page/:id' element={<CarPage />}/>
             <Route path='/test' element={<Test />}/>
