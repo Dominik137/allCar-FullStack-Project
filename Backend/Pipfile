@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ipdb = "0.13.9"
+flask = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+sqlalchemy-serializer = "*"
+flask-restful = "*"
+flask-cors = "*"
+faker = "*"
+flask-bcrypt = "*"
+python-dotenv = "*"
+openai = "*"
+pipenv = "*"
+install = "*"
+typer = "*"
+requests = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
