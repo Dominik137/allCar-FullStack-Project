@@ -141,13 +141,13 @@ useEffect(()=>{
     <details style={{ border: '1px solid #000000' }}>
       <summary>General Info: </summary>
       {car_info.general_info && (
-        <ul>
+        <div>
           {Object.entries(JSON.parse(car_info.general_info)).map(([key, value]) => (
-            <li key={key}>
+            <p key={key}>
               <strong>{key}:</strong> {value}
-            </li>
+            </p>
           ))}
-        </ul>
+      </div>
       )}
     </details>
     <details style={{ border: '1px solid #000000' }}>
